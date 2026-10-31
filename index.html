@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escaping the Rat Race - Universal Rolling Budget Tracker</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f8f9fa; color: #212529; margin: 0; padding: 20px; }
+    .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+    .text-center { position: relative; text-align: center; margin-bottom: 30px; padding-top: 58px; }
+    .current-datetime {
+      position: absolute;
+      top: 0;
+      right: 0;
+      min-width: 220px;
+      padding: 10px 15px 11px;
+      border: 1px solid rgba(25, 135, 84, 0.22);
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(232,245,233,0.9));
+      box-shadow: 0 7px 20px rgba(25, 80, 55, 0.08);
+      color: #355b49;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .current-datetime-label {
+      display: block;
+      margin-bottom: 2px;
+      color: #198754;
+      font-size: 0.64rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    .current-datetime-time {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      line-height: 1.2;
+    }
+    .current-datetime-date {
+      display: block;
+      margin-top: 3px;
+      color: #6c757d;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 0.79rem;
+      font-style: italic;
+    }
+    .text-success { color: #198754; }
+    .card { background: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 25px; }
+    .border-bills { border-left: 5px solid #0d6efd; }
+    .border-lifestyle { border-left: 5px solid #ffc107; }
+    .border-wealth { border-left: 5px solid #0dcaf0; }
+    .border-freedom { border-left: 5px solid #198754; background-color: #e8f5e9; }
+    .row { display: flex; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
+    .col { flex: 1; min-width: 250px; }
+    .form-label { font-weight: bold; display: block; margin-bottom: 8px; }
+    .form-control { width: 100%; padding: 8px 12px; border: 1px solid #ced4da; border-radius: 6px; box-sizing: border-box; font-size: 1rem; }
+    .display-row { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; padding: 10px 15px; margin-bottom: 15px; display: flex; justify-content: space-between; font-weight: bold; }
+    .alert { padding: 12px; border-radius: 6px; font-weight: bold; display: flex; justify-content: space-between; margin-top: 15px; border: 1px solid transparent; transition: all 0.2s ease; }
+    
+    .balance-positive { background-color: #cfe2ff; color: #084298; border-color: #b6d4fe; }
+    .balance-negative { background-color: #f8d7da; color: #842029; border-color: #f5c2c7; }
+    
+    .btn { padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 500; font-size: 0.875rem; background: transparent; transition: all 0.2s; }
+    .btn-outline-primary { border: 1px solid #0d6efd; color: #0d6efd; }
+    .btn-outline-primary:hover { background: #0d6efd; color: #fff; }
+    .btn-outline-warning { border: 1px solid #ffc107; color: #ffc107; }
+    .btn-outline-warning:hover { background: #ffc107; color: #212529; }
+    .btn-outline-info { border: 1px solid #0dcaf0; color: #0dcaf0; }
+    .btn-outline-info:hover { background: #0dcaf0; color: #212529; }
+    .btn-outline-danger { border: 1px solid #dc3545; color: #dc3545; padding: 4px 8px; }
+    .btn-outline-danger:hover { background: #dc3545; color: #fff; }
+    .btn-danger { background-color: #dc3545; color: white; border: 1px solid #dc3545; padding: 8px 16px; font-weight: bold; margin-left: 5px; }
+    .btn-danger:hover { background-color: #bb2d3b; border-color: #b02a37; }
+    .btn-success { background-color: #198754; color: white; border: 1px solid #198754; padding: 8px 16px; font-weight: bold; }
+    .btn-success:hover { background-color: #157347; border-color: #146c43; }
+    .section-title { margin-top: 0; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid #dee2e6; }
+    .dynamic-row { display: flex; gap: 10px; margin-bottom: 10px; align-items: center; width: 100%; }
+
+    body.dark-theme { background-color: #121820; color: #e2e8f0; color-scheme: dark; }
+    .dark-theme .card { background-color: #1e2935; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    .dark-theme .text-success,
+    .dark-theme #lblFreedomTitle { color: #75d69c !important; }
+    .dark-theme .form-label,
+    .dark-theme label { color: #e2e8f0 !important; }
+    .dark-theme .form-control { background-color: #111923; color: #e2e8f0; border-color: #526170; }
+    .dark-theme .form-control::placeholder { color: #aab6c2; }
+    .dark-theme .display-row { background-color: #263443; border-color: #526170; }
+    .dark-theme .alert.balance-positive { background-color: #1e3a5f; color: #d7e8ff; border-color: #315a83; }
+    .dark-theme .alert.balance-negative { background-color: #542b32; color: #ffe0e4; border-color: #87434d; }
+    .dark-theme .border-freedom { background-color: #17352b; }
+    .dark-theme .section-title { border-bottom-color: #526170; }
+    .dark-theme .current-datetime {
+      border-color: rgba(117, 214, 156, 0.28);
+      background: linear-gradient(135deg, #1e2935, #203b32);
+      color: #e2e8f0;
+      box-shadow: 0 7px 20px rgba(0,0,0,0.22);
+    }
+    .dark-theme .current-datetime-label { color: #75d69c; }
+    .dark-theme .current-datetime-date { color: #bdc8d3; }
+    .dark-theme .btn-outline-primary,
+    .dark-theme .btn-outline-warning,
+    .dark-theme .btn-outline-info { filter: brightness(1.35); }
+    .category-progress { margin: 18px 0; }
+    .progress-summary { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 6px; font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+    .progress-track { height: 12px; overflow: hidden; background: #e9ecef; border-radius: 999px; }
+    .progress-fill { width: 0; height: 100%; border-radius: inherit; transition: width 0.25s ease, background-color 0.25s ease; }
+    .progress-fill.progress-bills { background-color: #0d6efd; }
+    .progress-fill.progress-lifestyle { background-color: #d39e00; }
+    .progress-fill.progress-wealth { background-color: #0aa2c0; }
+    .progress-fill.near-limit { background-color: #fd7e14; }
+    .progress-fill.over-limit { background-color: #dc3545; }
+    .dark-theme .progress-track { background-color: #394858; }
+    html[dir="rtl"] .progress-track { direction: rtl; }
+    .report-dialog {
+      width: min(940px, calc(100% - 32px));
+      max-width: 940px;
+      max-height: calc(100vh - 32px);
+      overflow: auto;
+      border: 0;
+      border-radius: 12px;
+      padding: 24px;
+      color: #212529;
+      background: #fff;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.28);
+    }
+    .report-dialog::backdrop { background: rgba(15, 23, 42, 0.72); }
+    .dark-theme .report-dialog { color: #e2e8f0; background: #1e2935; }
+    .records-dialog {
+      width: min(620px, calc(100% - 32px));
+      max-width: 620px;
+    }
+    .records-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .records-status { min-height: 1.5em; margin: 12px 0 0; font-weight: 600; }
+    .records-dialog .report-section { margin-top: 16px; }
+    .records-dialog .report-input-grid { margin-top: 14px; }
+    .report-header { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; }
+    .report-header h2 { margin: 0 0 8px; }
+    .report-notice { margin: 0 0 20px; color: #6c757d; line-height: 1.5; }
+    .dark-theme .report-notice { color: #bdc8d3; }
+    .report-section { border-top: 1px solid #dee2e6; padding-top: 18px; margin-top: 20px; }
+    .dark-theme .report-section { border-top-color: #526170; }
+    .report-input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+    .report-input-grid label { font-weight: 600; }
+    .report-input-grid input { margin-top: 6px; }
+    .report-scenario-inputs { margin-top: 14px; }
+    .report-summary-grid, .report-scenario-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+    .report-metric { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 12px; }
+    .dark-theme .report-metric { background: #263443; border-color: #526170; }
+    .report-metric strong { display: block; margin-top: 6px; font-size: 1.1rem; overflow-wrap: anywhere; }
+    .report-time-to-goal {
+      margin: 22px 0;
+      padding: 22px;
+      border: 2px solid #198754;
+      border-radius: 10px;
+      background: #e8f5e9;
+      color: #146c43;
+      font-size: clamp(1.35rem, 3.5vw, 2rem);
+      font-weight: 800;
+      line-height: 1.35;
+      text-align: center;
+    }
+    .dark-theme .report-time-to-goal { background: #17352b; color: #75d69c; }
+    .report-chart { width: 100%; min-height: 250px; margin-top: 12px; }
+    .report-chart svg { display: block; width: 100%; height: auto; }
+    .report-table-wrap { overflow-x: auto; }
+    .report-table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+    .report-table th, .report-table td { padding: 9px; text-align: left; border-bottom: 1px solid #dee2e6; }
+    .dark-theme .report-table th, .dark-theme .report-table td { border-bottom-color: #526170; }
+    .dark-theme .report-chart svg text { fill: #e2e8f0 !important; }
+    .report-error { color: #b02a37; font-weight: 600; }
+    .report-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .report-fund-list { padding-left: 22px; }
+    .report-fund-list li { margin: 8px 0; }
+    @media (prefers-reduced-motion: reduce) {
+      .progress-fill { transition: none; }
+    }
+    @media (max-width: 560px) {
+      .text-center { padding-top: 72px; }
+      .current-datetime { right: 50%; min-width: 0; padding: 7px 11px; transform: translateX(50%); }
+      .current-datetime-time { font-size: 1.1rem; }
+      .current-datetime-date { font-size: 0.73rem; }
+    }
+    @media print {
+      body { background-color: #fff; padding: 0; }
+      .btn, .btn-danger, .btn-success, select, .no-print { display: none !important; }
+      .card { box-shadow: none; border: 1px solid #dee2e6; }
+      body.printing-report > .container { display: none !important; }
+      body.printing-report { background: #fff; color: #212529; padding: 0; }
+      body.printing-report #reportDialog {
+        display: block;
+        position: static;
+        inset: auto;
+        width: auto;
+        max-width: none;
+        max-height: none;
+        overflow: visible;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        color: #212529;
+        background: #fff;
+      }
+      body.printing-report #reportDialog::backdrop { display: none; }
+      body.printing-report .report-metric { break-inside: avoid; }
+      body.printing-report .report-chart svg text { fill: #212529 !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="text-center">
+      <div class="current-datetime" role="group" aria-label="Current local date and time">
+        <span id="dateTimeLabel" class="current-datetime-label">Local time</span>
+        <time id="currentTime" class="current-datetime-time"></time>
+        <time id="currentDate" class="current-datetime-date"></time>
+      </div>
+      <h1 id="mainTitle" class="text-success" style="font-weight: 800; margin-bottom: 5px;">Congratulations! You escaped the Rat Race</h1>
+      <p id="subTitle" style="color: #6c757d; margin: 0;">Automated Financial Freedom Tracker</p>
+    </div>
+
+    <!-- GLOBAL LOCALIZATION DROPDOWNS -->
+    <div class="card no-print" style="padding: 15px 25px;">
+      <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 220px;">
+          <label id="lblLanguage" class="form-label" style="font-size: 0.85rem; color: #6c757d;">Language / Taal / Izilimi</label>
+          <select id="langSelector" class="form-control" onchange="changeLanguage()" style="padding: 6px 10px; font-size: 0.9rem;">
+            <!-- South African Official Languages -->
+            <option value="en-ZA">English (South Africa)</option>
+            <option value="en-ZM">English (Zambia)</option>
+            <option value="af">Afrikaans</option>
+            <option value="zu">isiZulu</option>
+            <option value="xh">isiXhosa</option>
+            <option value="st">Sesotho</option>
+            <!-- Major Global Languages -->
+            <option value="en-US">English (United States)</option>
+            <option value="es">Español (Spanish)</option>
+            <option value="fr">Français (French)</option>
+            <option value="de">Deutsch (German)</option>
+            <option value="zh">中文 (Chinese)</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+            <option value="ar">العربية (Arabic)</option>
+            <option value="pt">Português (Portuguese)</option>
+            <option value="ru">Русский (Russian)</option>
+            <option value="ja">日本語 (Japanese)</option>
+          </select>
+        </div>
+        <div style="flex: 1; min-width: 220px;">
+          <label id="lblCurrencyRegion" class="form-label" style="font-size: 0.85rem; color: #6c757d;">Currency Region</label>
+          <select id="currencySelector" class="form-control" onchange="calculateBudget()" style="padding: 6px 10px; font-size: 0.9rem;">
+            <!-- Primary and Global Currencies -->
+            <option value="ZAR">ZAR — R</option>
+            <option value="ZMW">ZMW — ZK</option>
+            <option value="USD">USD — $</option>
+            <option value="EUR">EUR — €</option>
+            <option value="GBP">GBP — £</option>
+            <!-- Extended African & Global Options -->
+            <option value="BWP">BWP — P</option>
+            <option value="NAD">NAD — $</option>
+            <option value="NGN">NGN — ₦</option>
+            <option value="KES">KES — KSh</option>
+            <option value="JPY">JPY — ¥</option>
+            <option value="CNY">CNY — ¥</option>
+            <option value="INR">INR — ₹</option>
+            <option value="AUD">AUD — $</option>
+            <option value="CAD">CAD — $</option>
+            <option value="BRL">BRL — R$</option>
+            <option value="RUB">RUB — ₽</option>
+          </select>
+        </div>
+        <div style="display: flex; align-items: flex-end;">
+          <button id="btnTheme" class="btn btn-outline-primary" type="button" onclick="toggleTheme()" aria-pressed="false">Toggle dark theme</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN INCOME INPUT -->
+    <div class="card">
+      <div class="row" style="margin-bottom: 20px;">
+        <div style="flex: 2; min-width: 200px; margin-right: 15px;">
+          <label id="lblIncome" class="form-label">Income (After Tax)</label>
+          <input type="number" id="income" class="form-control" value="0" oninput="calculateBudget()">
+        </div>
+        <div style="flex: 1.5; min-width: 220px; display: flex; align-items: flex-end; justify-content: flex-end; gap: 5px;">
+          <button id="btnPrint" class="btn btn-success" onclick="window.print()">Download PDF</button>
+          <button id="btnReset" class="btn btn-danger" onclick="resetForm()">Reset Form</button>
+        </div>
+      </div>
+
+      <!-- Summary Targets Display -->
+      <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 150px;" class="target-box">
+          <small id="lblOverviewBills" style="color: #6c757d; display: block; margin-bottom: 4px;">Bills (50%):</small>
+          <span id="overviewBills" style="color: #0d6efd; font-weight: bold;">0.00</span>
+        </div>
+        <div style="flex: 1; min-width: 150px;" class="target-box">
+          <small id="lblOverviewLifestyle" style="color: #6c757d; display: block; margin-bottom: 4px;">Lifestyle (30%):</small>
+          <span id="overviewLifestyle" style="color: #ffc107; font-weight: bold;">0.00</span>
+        </div>
+        <div style="flex: 1; min-width: 150px;" class="target-box">
+          <small id="lblOverviewWealth" style="color: #6c757d; display: block; margin-bottom: 4px;">Wealth (20%):</small>
+          <span id="overviewWealth" style="color: #0dcaf0; font-weight: bold;">0.00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BILLS ACCOUNTS -->
+    <div class="card border-bills">
+      <h3 id="titleBills" class="section-title" style="color: #0d6efd;">Bills Accounts (Essential Expenses)</h3>
+      <div class="display-row" style="color: #0d6efd;">
+        <span id="lblTargetBills">Bills Target Allocation (50%):</span>
+        <span id="targetBills">0.00</span>
+      </div>
+      <div class="row">
+        <div class="col"><label id="lblRent">Rent / Mortgage Payment</label></div>
+        <div class="col"><input type="number" id="rent" class="form-control expense-bills" value="0" oninput="calculateBudget()"></div>
+      </div>
+      <div class="row">
+        <div class="col"><label id="lblWork">Work & Commute Expenses</label></div>
+        <div class="col"><input type="number" id="workExpenses" class="form-control expense-bills" value="0" oninput="calculateBudget()"></div>
+      </div>
+      <div class="row">
+        <div class="col"><label id="lblOtherBills">Other Essential Bills</label></div>
+        <div class="col"><input type="number" id="otherBills" class="form-control expense-bills" value="0" oninput="calculateBudget()"></div>
+      </div>
+      <div id="bills-dynamic-container" style="margin-bottom: 15px;"></div>
+      <div>
+        <button id="btnAddBill" class="btn btn-outline-primary" onclick="addNewRow('bills-dynamic-container', 'expense-bills')">+ Add Custom Bill</button>
+      </div>
+      <div class="category-progress">
+        <div class="progress-summary">
+          <span id="billsProgressPercent">0%</span>
+          <span id="billsProgressAmount"></span>
+        </div>
+        <div id="billsProgress" class="progress-track" role="progressbar" aria-labelledby="titleBills" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="0%">
+          <div id="billsProgressFill" class="progress-fill progress-bills"></div>
+        </div>
+      </div>
+        <div id="billsAlertBox" class="alert balance-positive">
+        <span id="lblBillsBalText">Bills Balance C/D:</span>
+        <span id="billsBalance">0.00</span>
+      </div>
+    </div>
+
+    <!-- LIFESTYLE ACCOUNTS -->
+    <div class="card border-lifestyle">
+      <h3 id="titleLifestyle" class="section-title" style="color: #ffc107;">Lifestyle Accounts (Non-Essential Expenses)</h3>
+      
+      <div class="display-row" style="color: #b58104;">
+        <span id="lblTargetLifestyle">Lifestyle Target Allocation (30%):</span>
+        <span id="targetLifestyle">0.00</span>
+      </div>
+
+      <div class="display-row" style="color: #084298; background: #eef5ff; border-color: #b6d4fe;">
+        <span id="lblRolledBills">Plus Bills Balance C/D:</span>
+        <span id="rolledBillsBalance">0.00</span>
+      </div>
+
+      <div class="row">
+        <div class="col"><label id="lblFood">Food Budget / Dining Out</label></div>
+        <div class="col"><input type="number" id="food" class="form-control expense-lifestyle" value="0" oninput="calculateBudget()"></div>
+      </div>
+      <div class="row">
+        <div class="col"><label id="lblLeisure">Entertainment & Leisure</label></div>
+        <div class="col"><input type="number" id="leisure" class="form-control expense-lifestyle" value="0" oninput="calculateBudget()"></div>
+      </div>
+
+      <div id="lifestyle-dynamic-container" style="margin-bottom: 15px;"></div>
+
+      <div>
+        <button id="btnAddLifestyle" class="btn btn-outline-warning" onclick="addNewRow('lifestyle-dynamic-container', 'expense-lifestyle')">+ Add Custom Lifestyle Item</button>
+      </div>
+      <div class="category-progress">
+        <div class="progress-summary">
+          <span id="lifestyleProgressPercent">0%</span>
+          <span id="lifestyleProgressAmount"></span>
+        </div>
+        <div id="lifestyleProgress" class="progress-track" role="progressbar" aria-labelledby="titleLifestyle" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="0%">
+          <div id="lifestyleProgressFill" class="progress-fill progress-lifestyle"></div>
+        </div>
+      </div>
+
+      <div id="lifestyleAlertBox" class="alert balance-positive">
+        <span id="lblLifestyleBalText">Lifestyle Balance B/D:</span>
+        <span id="lifestyleBalance">0.00</span>
+      </div>
+    </div>
+
+    <!-- WEALTH ACCOUNTS -->
+    <div class="card border-wealth">
+      <h3 id="titleWealth" class="section-title" style="color: #0dcaf0;">Wealth Accounts (Investments & Allowances)</h3>
+      
+      <div class="display-row" style="color: #055160;">
+        <span id="lblTargetWealth">Wealth Target Allocation (20%):</span>
+        <span id="targetWealth">0.00</span>
+      </div>
+
+      <div class="display-row" style="color: #664d03; background: #fffdf5; border-color: #fef1c4;">
+        <span id="lblRolledLifestyle">Plus Lifestyle Balance B/D:</span>
+        <span id="rolledLifestyleBalance">0.00</span>
+      </div>
+
+      <div class="row">
+        <div class="col"><label id="lblEmergency">Emergency Fund Account (6 Months)</label></div>
+        <div class="col"><input type="number" id="emergencyFund" class="form-control expense-wealth" value="0" oninput="calculateBudget()"></div>
+      </div>
+      <div class="row">
+        <div class="col"><label id="lblIndex">Index Fund Investment Account</label></div>
+        <div class="col"><input type="number" id="indexFund" class="form-control expense-wealth" value="0" oninput="calculateBudget()"></div>
+      </div>
+      <div class="row">
+        <div class="col"><label id="lblDebt">Kill Debt Account (Loans, etc.)</label></div>
+        <div class="col"><input type="number" id="killDebt" class="form-control expense-wealth" value="0" oninput="calculateBudget()"></div>
+      </div>
+      <div class="row">
+        <div class="col"><label id="lblDaddyAllowance">Daddy's Allowance</label></div>
+        <div class="col"><input type="number" id="daddyAllowance" class="form-control expense-wealth" value="0" oninput="calculateBudget()"></div>
+      </div>
+      <div class="row">
+        <div class="col"><label id="lblMommyAllowance">Mommy's Allowance</label></div>
+        <div class="col"><input type="number" id="mommyAllowance" class="form-control expense-wealth" value="0" oninput="calculateBudget()"></div>
+      </div>
+
+      <div id="wealth-dynamic-container" style="margin-bottom: 15px;"></div>
+
+      <div>
+        <button id="btnAddWealth" class="btn btn-outline-info" onclick="addNewRow('wealth-dynamic-container', 'expense-wealth')">+ Add Custom Wealth Item</button>
+      </div>
+      <div class="category-progress">
+        <div class="progress-summary">
+          <span id="wealthProgressPercent">0%</span>
+          <span id="wealthProgressAmount"></span>
+        </div>
+        <div id="wealthProgress" class="progress-track" role="progressbar" aria-labelledby="titleWealth" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="0%">
+          <div id="wealthProgressFill" class="progress-fill progress-wealth"></div>
+        </div>
+      </div>
+
+      <div id="wealthAlertBox" class="alert balance-positive">
+        <span id="lblWealthBalText">Remaining Wealth Balance:</span>
+        <span id="wealthBalance">0.00</span>
+      </div>
+    </div>
+
+    <!-- GLOBAL SCORECARD -->
+    <div class="card border-freedom">
+      <div style="display: flex; justify-content: space-between; align-items: center; font-weight: 800; font-size: 1.25rem;">
+        <span id="lblFreedomTitle" class="text-success">YOUR FINANCIAL FREEDOM NUMBER IS:</span>
+        <span id="financialFreedomNumber" class="text-success">0.00</span>
+      </div>
+      <small id="lblFormulaText" style="color: #6c757d; display: block; margin-top: 5px; font-weight: 500;">Calculation: (After-tax income − remaining wealth balance) × 12 × 25</small>
+      <button id="btnReport" class="btn btn-success no-print" type="button" style="margin-top: 14px;" onclick="openFinancialFreedomReport()">View Financial Freedom Report</button>
+    </div>
+
+  </div> <!-- This closes your main .container div -->
+
+  <div class="container">
+    <div class="card no-print monthly-record-card">
+      <h2 id="monthlyRecordsHeading" class="section-title" style="margin-bottom: 10px;">Monthly Records</h2>
+      <p id="monthlyRecordsDescription" class="report-notice">Save dated snapshots in this browser, then reopen them later. Records stay on this device and are not synced to an account.</p>
+      <div class="report-input-grid">
+        <label for="recordMonth"><span id="recordMonthLabel">Record month</span>
+          <input id="recordMonth" class="form-control" type="month" required>
+        </label>
+      </div>
+      <div class="records-actions">
+        <button id="btnSaveMonthlyRecord" class="btn btn-success" type="button" onclick="saveMonthlyRecord()">Save This Month</button>
+        <button id="btnBrowseMonthlyRecords" class="btn btn-outline-primary" type="button" onclick="openMonthlyRecords()">Browse Saved Records</button>
+      </div>
+      <p id="monthlyRecordStatus" class="records-status" role="status" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <dialog id="reportDialog" class="report-dialog" aria-labelledby="reportTitle">
+    <div class="report-header">
+      <div>
+        <h2 id="reportTitle">Financial Freedom &amp; Investment Report</h2>
+        <p id="reportGeneratedAt" class="report-notice"></p>
+      </div>
+      <button id="btnCloseReport" class="btn btn-outline-danger no-print" type="button" aria-label="Close report" onclick="closeFinancialFreedomReport()">Close</button>
+    </div>
+    <p id="reportDisclaimer" class="report-notice">This report is generated entirely in your browser. It uses illustrative assumptions, not predictions or investment advice. Past performance does not guarantee future results.</p>
+
+    <section class="report-section" aria-labelledby="reportBudgetHeading">
+      <h3 id="reportBudgetHeading" data-report-label="budgetHeading">Your current budget snapshot</h3>
+      <p id="reportFormulaDescription"></p>
+      <div id="reportBudgetSummary" class="report-summary-grid"></div>
+      <p id="reportTargetNote" class="report-notice"></p>
+    </section>
+
+    <section class="report-section" aria-labelledby="reportAssumptionsHeading">
+      <h3 id="reportAssumptionsHeading" data-report-label="assumptionsHeading">Projection assumptions</h3>
+      <p class="report-notice"><span id="reportCurrencyIntro">All projection amounts use</span> <strong id="reportCurrencyCode">ZAR</strong><span id="reportContributionTiming">. The monthly contribution is assumed to be invested at each month’s end.</span></p>
+      <form id="reportForm">
+        <div class="report-input-grid">
+          <label for="reportStartingBalance"><span data-report-label="startingBalance">Starting invested balance</span>
+            <input id="reportStartingBalance" class="form-control" type="number" min="0" step="any" value="0" required>
+          </label>
+          <label for="reportTarget"><span data-report-label="projectionTarget">Financial Freedom Number target for this projection</span>
+            <input id="reportTarget" class="form-control" type="number" min="0" step="any" value="0" required>
+          </label>
+          <label for="reportContributionFrequency"><span data-report-label="contributionFrequency">Contribution frequency</span>
+            <select id="reportContributionFrequency" class="form-control">
+              <option value="monthly" data-report-label="monthlyFrequency" selected>Monthly</option>
+              <option value="weekly" data-report-label="weeklyFrequency">Weekly</option>
+            </select>
+          </label>
+          <label for="reportContributionAmount"><span id="reportContributionLabel" data-report-label="monthlyContribution">Monthly investment contribution</span>
+            <input id="reportContributionAmount" class="form-control" type="number" min="0" step="any" value="0" required>
+          </label>
+          <label for="reportAnnualFee"><span data-report-label="annualFee">Annual fund fee (%)</span>
+            <input id="reportAnnualFee" class="form-control" type="number" min="0" max="5" step="0.01" value="0.2" required>
+          </label>
+          <label for="reportInflation"><span data-report-label="inflation">Annual inflation assumption (%)</span>
+            <input id="reportInflation" class="form-control" type="number" min="0" max="30" step="0.1" value="2.5" required>
+          </label>
+          <label for="reportYears"><span data-report-label="horizon">Projection horizon (years)</span>
+            <input id="reportYears" class="form-control" type="number" min="1" max="80" step="1" value="30" required>
+          </label>
+          <label for="reportHeadlineScenario"><span data-report-label="headlineScenario">Scenario used for time-to-target result</span>
+            <select id="reportHeadlineScenario" class="form-control">
+              <option value="conservative" data-report-scenario="conservative">Conservative</option>
+              <option value="middle" selected data-report-scenario="middle">Middle</option>
+              <option value="optimistic" data-report-scenario="optimistic">Optimistic</option>
+            </select>
+          </label>
+        </div>
+        <div class="report-input-grid report-scenario-inputs">
+          <label for="reportConservativeRate"><span data-report-label="conservativeReturn">Conservative gross return (% / year)</span>
+            <input id="reportConservativeRate" class="form-control" type="number" min="-50" max="50" step="0.1" value="4" required>
+          </label>
+          <label for="reportMiddleRate"><span data-report-label="middleReturn">Middle gross return (% / year)</span>
+            <input id="reportMiddleRate" class="form-control" type="number" min="-50" max="50" step="0.1" value="7" required>
+          </label>
+          <label for="reportOptimisticRate"><span data-report-label="optimisticReturn">Optimistic gross return (% / year)</span>
+            <input id="reportOptimisticRate" class="form-control" type="number" min="-50" max="50" step="0.1" value="10" required>
+          </label>
+        </div>
+      </form>
+      <p id="reportError" class="report-error" role="alert" hidden></p>
+    </section>
+
+    <section class="report-section" aria-labelledby="reportProjectionHeading">
+      <h3 id="reportProjectionHeading" data-report-label="projectionHeading">Illustrative compound-growth projection</h3>
+      <p id="reportProjectionMethod" class="report-notice"></p>
+      <p id="reportTimeToGoal" class="report-time-to-goal" aria-live="polite"></p>
+      <p id="reportTimeScenarioNote" class="report-notice"></p>
+      <div id="reportScenarioCards" class="report-scenario-grid"></div>
+      <div id="reportChart" class="report-chart"></div>
+      <h4 data-report-label="yearTableHeading">Year-by-year projected balances (nominal)</h4>
+      <div class="report-table-wrap">
+        <table class="report-table">
+          <thead>
+            <tr>
+              <th scope="col" data-report-label="year">Year</th>
+              <th scope="col" data-report-scenario="conservative">Conservative</th>
+              <th scope="col" data-report-scenario="middle">Middle</th>
+              <th scope="col" data-report-scenario="optimistic">Optimistic</th>
+            </tr>
+          </thead>
+          <tbody id="reportYearTable"></tbody>
+        </table>
+      </div>
+      <div class="report-table-wrap">
+        <table class="report-table">
+          <thead>
+            <tr>
+              <th scope="col" data-report-label="scenario">Scenario</th>
+              <th scope="col" data-report-label="grossReturn">Gross return</th>
+              <th scope="col" data-report-label="netReturn">Net return after fee</th>
+              <th id="reportRequiredContributionHeading" scope="col" data-report-label="requiredContribution">Required monthly contribution</th>
+              <th scope="col" data-report-label="projectedValue">Projected value at horizon</th>
+              <th scope="col" data-report-label="todayValue">Value in today's money</th>
+            </tr>
+          </thead>
+          <tbody id="reportScenarioTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="report-section" aria-labelledby="reportFundsHeading">
+      <h3 id="reportFundsHeading" data-report-label="fundsHeading">Examples of low-cost index funds and ETFs</h3>
+      <p id="reportFundsNote" class="report-notice">These examples track different markets and are not interchangeable recommendations. Availability, fees, tax treatment, fund structure, and currency exposure vary by country. No live fund data is loaded; verify current details with the issuer before investing.</p>
+      <ul class="report-fund-list">
+        <li><strong>VOO — Vanguard S&amp;P 500 ETF:</strong> large U.S. companies.</li>
+        <li><strong>VTI — Vanguard Total Stock Market ETF:</strong> broad U.S. stock market.</li>
+        <li><strong>VTSAX — Vanguard Total Stock Market mutual fund:</strong> broad U.S. stock market; overlaps substantially with VTI.</li>
+        <li><strong>VT — Vanguard Total World Stock ETF:</strong> global stocks.</li>
+        <li><strong>VXUS — Vanguard Total International Stock ETF:</strong> international stocks excluding the U.S.</li>
+        <li><strong>URTH — iShares MSCI World ETF:</strong> developed-market stocks.</li>
+        <li><strong>SWDA — iShares Core MSCI World UCITS ETF:</strong> developed-market stocks; exchange tickers can vary.</li>
+        <li><strong>CSPX — iShares Core S&amp;P 500 UCITS ETF:</strong> U.S. S&amp;P 500 stocks.</li>
+        <li><strong>10X Total World Stock Feeder Fund:</strong> global exposure; confirm current product name and terms.</li>
+        <li><strong>Satrix MSCI World Feeder ETF:</strong> developed-market exposure; confirm current listing details.</li>
+      </ul>
+    </section>
+
+    <div class="report-actions no-print">
+      <button id="btnPrintReport" class="btn btn-success" type="button" onclick="printFinancialFreedomReport()">Print / Save as PDF</button>
+      <button id="btnCloseReportFooter" class="btn btn-outline-primary" type="button" onclick="closeFinancialFreedomReport()">Close report</button>
+    </div>
+  </dialog>
+
+  <dialog id="recordsDialog" class="report-dialog records-dialog" aria-labelledby="recordsDialogTitle">
+    <div class="report-header">
+      <div>
+        <h2 id="recordsDialogTitle">Saved Monthly Records</h2>
+        <p id="recordsDialogDescription" class="report-notice">Choose a month to review or load a saved budget snapshot.</p>
+      </div>
+      <button id="btnCloseRecords" class="btn btn-outline-danger no-print" type="button" onclick="closeMonthlyRecords()">Close</button>
+    </div>
+    <label for="savedRecordMonth"><span id="savedRecordMonthLabel">Saved month</span>
+      <select id="savedRecordMonth" class="form-control"></select>
+    </label>
+    <p id="savedRecordSummary" class="report-notice" style="margin-top: 12px;"></p>
+    <div class="records-actions no-print">
+      <button id="btnLoadMonthlyRecord" class="btn btn-success" type="button" onclick="loadSelectedMonthlyRecord()">Load This Record</button>
+      <button id="btnExportMonthlyRecords" class="btn btn-outline-primary" type="button" onclick="exportMonthlyRecords()">Export Backup</button>
+      <label id="btnImportMonthlyRecords" class="btn btn-outline-primary" for="monthlyRecordsImportFile">Import Backup</label>
+      <input id="monthlyRecordsImportFile" type="file" accept="application/json,.json" hidden onchange="importMonthlyRecords(event)">
+    </div>
+    <p id="recordsDialogStatus" class="records-status" role="status" aria-live="polite"></p>
+  </dialog>
+
+  <script src="app_v2.js?v=20261031-records3"></script>
+</body>
+</html>

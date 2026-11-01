@@ -107,6 +107,26 @@
     .dark-theme .btn-outline-primary,
     .dark-theme .btn-outline-warning,
     .dark-theme .btn-outline-info { filter: brightness(1.35); }
+    .finance-101-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+      padding: 12px 20px;
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 999px;
+      background: linear-gradient(110deg, #123f34, #18794e 58%, #b27432);
+      box-shadow: 0 10px 24px rgba(16, 56, 47, 0.22);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .finance-101-link:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(16, 56, 47, 0.3); }
+    .finance-101-link:focus-visible { outline: 3px solid #d59a50; outline-offset: 3px; }
+    .finance-101-link span { font-size: 1.1rem; }
     .category-progress { margin: 18px 0; }
     .progress-summary { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 6px; font-size: 0.9rem; font-variant-numeric: tabular-nums; }
     .progress-track { height: 12px; overflow: hidden; background: #e9ecef; border-radius: 999px; }
@@ -226,6 +246,9 @@
       </div>
       <h1 id="mainTitle" class="text-success" style="font-weight: 800; margin-bottom: 5px;">Congratulations! You escaped the Rat Race</h1>
       <p id="subTitle" style="color: #6c757d; margin: 0;">Automated Financial Freedom Tracker</p>
+      <a class="finance-101-link" href="./finance-101.html" aria-label="Explore Finance 101: your financial literacy field guide">
+        <span aria-hidden="true">✦</span> Finance 101 <span aria-hidden="true">→</span>
+      </a>
     </div>
 
     <!-- GLOBAL LOCALIZATION DROPDOWNS -->

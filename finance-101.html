@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#102a24">
+  <meta name="description" content="A practical, South Africa-aware field guide to money, investing, financial literacy and building wealth with intention.">
+  <title>Finance 101 — The Wealth Field Guide</title>
+  <link rel="icon" type="image/svg+xml" href="./icon.svg">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17231f;
+      --muted: #64736d;
+      --paper: #f5f4ee;
+      --white: #fffefa;
+      --green: #164b3c;
+      --green-dark: #102a24;
+      --mint: #dcebe1;
+      --gold: #d8a657;
+      --line: #e3e5dc;
+      --shadow: 0 18px 55px rgba(25, 45, 37, .09);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      scroll-behavior: smooth;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: var(--paper); line-height: 1.65; }
+    a { color: inherit; }
+    button, input, select { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .topbar { position: sticky; z-index: 5; top: 0; border-bottom: 1px solid rgba(255,255,255,.12); background: rgba(16,42,36,.96); color: #fff; backdrop-filter: blur(12px); }
+    .topbar-inner { width: min(1160px, calc(100% - 40px)); min-height: 64px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 10px; white-space: nowrap; text-decoration: none; font-size: .82rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .brand-mark { width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.4); border-radius: 50%; color: #f3c878; font-family: Georgia, serif; font-size: 1.1rem; }
+    .top-links { display: flex; align-items: center; gap: 22px; color: #d8e3dd; font-size: .83rem; }
+    .top-links a { white-space: nowrap; }
+    .top-links a { text-decoration: none; }
+    .top-links a:hover { color: #f3c878; }
+    .hero { position: relative; overflow: hidden; color: #fff; background: radial-gradient(ellipse at 82% 30%, rgba(216,166,87,.24), transparent 28%), linear-gradient(120deg, #102a24 0%, #164b3c 63%, #235c49 100%); }
+    .hero::after { position: absolute; right: -80px; bottom: -240px; width: 480px; height: 480px; border: 1px solid rgba(255,255,255,.12); border-radius: 50%; box-shadow: 0 0 0 44px rgba(255,255,255,.025), 0 0 0 88px rgba(255,255,255,.025); content: ""; pointer-events: none; }
+    .hero-inner { position: relative; z-index: 1; width: min(1160px, calc(100% - 40px)); margin: auto; padding: 92px 0 80px; }
+    .eyebrow { display: inline-flex; gap: 10px; align-items: center; color: #f2c778; font-size: .73rem; font-weight: 800; letter-spacing: .19em; text-transform: uppercase; }
+    .eyebrow::before { width: 26px; height: 1px; background: currentColor; content: ""; }
+    h1, h2, h3, p { margin-top: 0; }
+    .hero h1 { max-width: 760px; margin: 18px 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(3rem, 7vw, 5.7rem); font-weight: 500; letter-spacing: -.055em; line-height: .99; }
+    .hero h1 em { color: #e8bd73; font-weight: 400; }
+    .hero-copy { max-width: 610px; margin-bottom: 30px; color: #d9e5df; font-size: 1.1rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .button { display: inline-flex; min-height: 46px; align-items: center; justify-content: center; gap: 9px; padding: 10px 17px; border: 1px solid transparent; border-radius: 7px; cursor: pointer; font-size: .88rem; font-weight: 750; text-decoration: none; transition: transform .18s ease, background .18s ease; }
+    .button:hover { transform: translateY(-2px); }
+    .button-gold { color: #1b2b24; background: #e8bd73; }
+    .button-gold:hover { background: #f0cc8c; }
+    .button-quiet { border-color: rgba(255,255,255,.36); color: #fff; background: transparent; }
+    .button-green { color: white; background: var(--green); }
+    .button-light { border-color: var(--line); background: var(--white); }
+    .hero-note { margin: 18px 0 0; color: #bed0c5; font-size: .78rem; }
+    .hero-stats { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 58px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.18); color: #d9e5df; font-size: .82rem; }
+    .hero-stats strong { color: #fff; }
+    main { width: min(1160px, calc(100% - 40px)); margin: auto; }
+    .intro-strip { display: grid; grid-template-columns: 1.25fr 1fr; gap: 26px; align-items: center; margin: 40px 0 76px; padding: 24px 28px; border: 1px solid #e8e4d7; border-radius: 12px; background: #eeeadd; }
+    .intro-strip strong { display: block; margin-bottom: 5px; font-family: Georgia, serif; font-size: 1.2rem; font-weight: 500; }
+    .intro-strip p { margin: 0; color: var(--muted); font-size: .9rem; }
+    .principle { padding-left: 22px; border-left: 2px solid var(--gold); color: #43544b; font-family: Georgia, serif; font-size: 1.04rem; font-style: italic; }
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+    .section-heading h2 { margin: 8px 0 0; font-family: Georgia, serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 500; letter-spacing: -.04em; line-height: 1.1; }
+    .section-heading p { max-width: 430px; margin: 0; color: var(--muted); font-size: .9rem; }
+    .kicker { color: #7e633b; font-size: .72rem; font-weight: 850; letter-spacing: .18em; text-transform: uppercase; }
+    .path-section { margin-bottom: 88px; }
+    .path-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .path-card { position: relative; min-height: 250px; overflow: hidden; padding: 22px 20px; border: 1px solid var(--line); border-radius: 10px; background: var(--white); box-shadow: 0 5px 18px rgba(30,50,40,.035); }
+    .path-number { display: flex; width: 34px; height: 34px; align-items: center; justify-content: center; margin-bottom: 30px; border-radius: 50%; color: var(--green); background: var(--mint); font-family: Georgia, serif; font-size: 1rem; }
+    .path-card h3 { margin-bottom: 8px; font-family: Georgia, serif; font-size: 1.26rem; font-weight: 500; }
+    .path-card p { margin-bottom: 16px; color: var(--muted); font-size: .84rem; line-height: 1.55; }
+    .path-card a { color: var(--green); font-size: .8rem; font-weight: 800; text-decoration: none; }
+    .path-card a:hover { text-decoration: underline; }
+    .path-time { position: absolute; top: 26px; right: 18px; color: #8a928b; font-size: .7rem; }
+    .learning-section { margin: 0 0 86px; }
+    .stage-list { display: grid; gap: 12px; }
+    .stage { display: grid; grid-template-columns: 58px minmax(0, 1fr) 240px; gap: 20px; align-items: start; padding: 24px; border: 1px solid var(--line); border-radius: 10px; background: var(--white); }
+    .stage-number { display: grid; width: 44px; height: 44px; place-items: center; border-radius: 50%; color: #fff; background: var(--green); font-family: Georgia, serif; font-size: 1.25rem; }
+    .stage h3 { margin: 0 0 4px; font-family: Georgia, serif; font-size: 1.4rem; font-weight: 500; }
+    .stage-meta { margin-bottom: 12px; color: #7e633b; font-size: .73rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .stage p { margin-bottom: 12px; color: var(--muted); font-size: .88rem; }
+    .stage ul { margin: 0; padding-left: 19px; color: #45564d; font-size: .84rem; }
+    .stage li + li { margin-top: 5px; }
+    .stage-assignment { padding: 14px; border-radius: 7px; background: #f1f3eb; }
+    .stage-assignment strong { display: block; margin-bottom: 5px; color: var(--green); font-size: .77rem; text-transform: uppercase; letter-spacing: .08em; }
+    .stage-assignment p { margin: 0; font-size: .81rem; }
+    .shortcuts { display: grid; grid-template-columns: .8fr 1.2fr; gap: 28px; margin: 0 0 88px; padding: 30px; border-radius: 12px; color: white; background: var(--green-dark); }
+    .shortcuts h2 { margin: 8px 0; font-family: Georgia, serif; font-size: 2rem; font-weight: 500; }
+    .shortcuts p { color: #c8d7ce; font-size: .87rem; }
+    .shortcut-list { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .shortcut-item { padding: 15px; border: 1px solid rgba(255,255,255,.16); border-radius: 8px; color: #d8e4dc; font-size: .82rem; }
+    .shortcut-item strong { display: block; margin-bottom: 4px; color: #f0ca82; }
+    .practice-section { margin-bottom: 88px; }
+    .simulator { display: grid; grid-template-columns: .82fr 1.18fr; gap: 26px; padding: 26px; border: 1px solid var(--line); border-radius: 12px; background: var(--white); box-shadow: var(--shadow); }
+    .simulator h3 { margin-bottom: 5px; font-family: Georgia, serif; font-size: 1.45rem; font-weight: 500; }
+    .simulator-intro { color: var(--muted); font-size: .85rem; }
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .field label { display: block; margin-bottom: 5px; color: #4a5b52; font-size: .75rem; font-weight: 750; }
+    .field input { width: 100%; min-height: 42px; padding: 8px 10px; border: 1px solid #d7ddd5; border-radius: 6px; color: var(--ink); background: #fff; }
+    .field input:focus, .search-input:focus { outline: 3px solid rgba(22,75,60,.18); border-color: var(--green); }
+    .sim-results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 17px; }
+    .sim-result { padding: 13px; border-radius: 7px; background: #f0f3eb; }
+    .sim-result span { display: block; color: var(--muted); font-size: .7rem; }
+    .sim-result strong { display: block; margin-top: 4px; color: var(--green); font-size: 1.02rem; font-variant-numeric: tabular-nums; }
+    .sim-warning { margin: 12px 0 0; color: #775b31; font-size: .76rem; }
+    .glossary-section { margin-bottom: 90px; }
+    .glossary-tools { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; margin: 24px 0 18px; }
+    .search-wrap { position: relative; flex: 1; min-width: 230px; max-width: 400px; }
+    .search-input { width: 100%; min-height: 44px; padding: 9px 13px 9px 39px; border: 1px solid #d7ddd5; border-radius: 7px; background: var(--white); }
+    .search-icon { position: absolute; top: 9px; left: 13px; color: #718078; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); }
+    .filters { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+    .filter-chip { min-height: 35px; padding: 6px 11px; border: 1px solid #d7ddd5; border-radius: 999px; color: #4b5c53; background: transparent; cursor: pointer; font-size: .75rem; font-weight: 750; }
+    .filter-chip[aria-pressed="true"] { border-color: var(--green); color: #fff; background: var(--green); }
+    .glossary-count { margin: 0 0 12px; color: var(--muted); font-size: .78rem; }
+    .term-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 11px; }
+    .term-card { min-height: 175px; padding: 17px; border: 1px solid var(--line); border-radius: 8px; background: var(--white); }
+    .term-card[hidden] { display: none; }
+    .term-category { color: #8b6835; font-size: .64rem; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
+    .term-card h3 { margin: 6px 0 5px; font-family: Georgia, serif; font-size: 1.13rem; font-weight: 500; }
+    .term-card p { margin: 0; color: #5e6d65; font-size: .81rem; line-height: 1.55; }
+    .term-example { display: block; margin-top: 9px; color: #305b48; font-size: .74rem; font-weight: 650; }
+    .empty-state { display: none; padding: 30px; border: 1px dashed #cbd4cb; border-radius: 8px; color: var(--muted); text-align: center; }
+    .disclaimer { margin: 0 0 50px; padding: 16px 18px; border-left: 3px solid var(--gold); color: #58675e; background: #eeeadd; font-size: .8rem; }
+    footer { padding: 26px 20px; color: #d7e3db; background: var(--green-dark); text-align: center; font-size: .78rem; }
+    footer a { color: #f0ca82; font-weight: 700; text-decoration: none; }
+    :focus-visible { outline: 3px solid #d8a657; outline-offset: 3px; }
+    @media (max-width: 850px) {
+      .path-grid { grid-template-columns: repeat(2, 1fr); }
+      .term-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .stage { grid-template-columns: 48px minmax(0, 1fr); }
+      .stage-assignment { grid-column: 2; }
+      .simulator { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .topbar-inner, .hero-inner, main { width: min(100% - 28px, 1160px); }
+      .top-links { gap: 12px; font-size: .75rem; }
+      .top-links a:nth-child(1), .top-links a:nth-child(2), .top-links a:nth-child(3) { display: none; }
+      .hero-inner { padding: 66px 0 48px; }
+      .hero h1 { font-size: clamp(3rem, 15vw, 4.5rem); }
+      .hero-copy { font-size: .98rem; }
+      .hero-stats { gap: 12px 20px; margin-top: 38px; }
+      .intro-strip, .shortcuts { grid-template-columns: 1fr; }
+      .intro-strip { gap: 14px; margin: 24px 0 56px; padding: 20px; }
+      .principle { padding: 10px 0 0; border-top: 2px solid var(--gold); border-left: 0; }
+      .path-grid, .term-grid { grid-template-columns: 1fr; }
+      .path-card { min-height: 210px; }
+      .section-heading { display: block; }
+      .section-heading p { margin-top: 12px; }
+      .stage { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding: 17px; }
+      .stage-number { width: 36px; height: 36px; }
+      .stage-assignment { grid-column: 1 / -1; }
+      .shortcuts { padding: 22px; }
+      .shortcut-list { grid-template-columns: 1fr; }
+      .field-grid { grid-template-columns: 1fr 1fr; }
+      .simulator { padding: 18px; }
+      .sim-results { grid-template-columns: 1fr; }
+      .term-card { min-height: 0; }
+    }
+    @media (max-width: 360px) {
+      .brand { gap: 0; font-size: 0; letter-spacing: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="./index.html"><span class="brand-mark" aria-hidden="true">✳</span> Wealth Field Guide</a>
+      <nav class="top-links" aria-label="Page navigation">
+        <a href="#learning-path">Learning path</a>
+        <a href="#practice">Practice lab</a>
+        <a href="#glossary">A–Z glossary</a>
+        <a href="./index.html">← Budget tracker</a>
+      </nav>
+    </div>
+  </header>
+  <section class="hero">
+    <div class="hero-inner">
+      <span class="eyebrow">A practical financial literacy field guide</span>
+      <h1>Make money<br>make <em>meaning.</em></h1>
+      <p class="hero-copy">Learn to read your financial life clearly: where money comes from, what it costs, how it compounds, and how to build a resilient plan that belongs to you.</p>
+      <div class="hero-actions">
+        <a class="button button-gold" href="#learning-path">Start your apprenticeship <span aria-hidden="true">→</span></a>
+        <a class="button button-quiet" href="#glossary">Explore the glossary</a>
+      </div>
+      <p class="hero-note">South Africa-aware examples · Plain language · No promises of quick riches</p>
+      <div class="hero-stats">
+        <span><strong>4 stages</strong> from foundation to mastery</span>
+        <span><strong id="termTotal">50+</strong> money concepts explained</span>
+        <span><strong>1 practice lab</strong> to test your assumptions</span>
+      </div>
+    </div>
+  </section>
+  <main>
+    <aside class="intro-strip" aria-label="How to use this guide">
+      <div><strong>Think like an architect, not a speculator.</strong><p>Wealth is usually built through repeatable decisions: earning, protecting, saving, investing, and reviewing. The order matters more than a clever-sounding shortcut.</p></div>
+      <div class="principle">“First understand the cash flow. Then understand the risk. Only then choose the tool.”</div>
+    </aside>
+
+    <section class="path-section" id="learning-path">
+      <div class="section-heading">
+        <div><span class="kicker">Your apprenticeship</span><h2>A path you can actually follow.</h2></div>
+        <p>Move at your own pace. Each stage ends with a real-world task; finish with evidence, not just good intentions.</p>
+      </div>
+      <div class="path-grid">
+        <article class="path-card"><span class="path-time">Week 1</span><span class="path-number">01</span><h3>See the whole picture</h3><p>Map income, spending, assets, debts, and the difference between cash flow and net worth.</p><a href="#stage-1">Open stage one →</a></article>
+        <article class="path-card"><span class="path-time">Weeks 2–3</span><span class="path-number">02</span><h3>Build your defence</h3><p>Make room for emergencies, manage expensive debt, and protect the people and income you depend on.</p><a href="#stage-2">Open stage two →</a></article>
+        <article class="path-card"><span class="path-time">Weeks 4–6</span><span class="path-number">03</span><h3>Put capital to work</h3><p>Understand compounding, diversification, index funds, ETFs, tax wrappers, and property trade-offs.</p><a href="#stage-3">Open stage three →</a></article>
+        <article class="path-card"><span class="path-time">Ongoing</span><span class="path-number">04</span><h3>Design for resilience</h3><p>Stress-test your plan, weigh leverage and liquidity, and review it with humility and discipline.</p><a href="#stage-4">Open stage four →</a></article>
+      </div>
+    </section>
+
+    <section class="learning-section" aria-labelledby="stages-title">
+      <div class="section-heading">
+        <div><span class="kicker">Learn · do · review</span><h2 id="stages-title">The four stages of financial fluency.</h2></div>
+      </div>
+      <div class="stage-list">
+        <article class="stage" id="stage-1">
+          <div class="stage-number">1</div>
+          <div><div class="stage-meta">Foundation · Know your numbers</div><h3>Build your personal balance sheet</h3><p>Financial literacy begins with seeing what is true today—not judging yourself for it. Track a full month of money in and money out, then take a snapshot of what you own and owe.</p><ul><li>Separate gross salary from take-home pay; note irregular income like commission, bonuses, or grants.</li><li>List assets at realistic resale value and liabilities at current settlement value.</li><li>Calculate net worth (assets minus liabilities) and monthly savings rate. A negative number is a starting point, not a verdict.</li></ul></div>
+          <aside class="stage-assignment"><strong>Field assignment</strong><p>Review 90 days of statements. Categorise every transaction. Write down one surprising pattern and one change you can sustain for 30 days.</p></aside>
+        </article>
+        <article class="stage" id="stage-2">
+          <div class="stage-number">2</div>
+          <div><div class="stage-meta">Stability · Protect your downside</div><h3>Make the plan hard to break</h3><p>Resilience is a wealth strategy. Before chasing returns, make sure a car repair, income interruption, or family emergency will not force you into costly debt or a rushed sale.</p><ul><li>Start a liquid emergency reserve sized to your responsibilities and income stability; build it progressively.</li><li>Prioritise high-cost debt while maintaining required payments and checking fees and early-settlement terms.</li><li>Review medical, life, disability, and household cover against actual needs; avoid paying for duplicate or unsuitable cover.</li></ul></div>
+          <aside class="stage-assignment"><strong>Field assignment</strong><p>Price three likely emergencies. Set a first reserve milestone and automate an affordable transfer on payday. Compare one debt’s effective annual cost with a realistic payoff plan.</p></aside>
+        </article>
+        <article class="stage" id="stage-3">
+          <div class="stage-number">3</div>
+          <div><div class="stage-meta">Growth · Invest with a thesis</div><h3>Choose a system, not a hot tip</h3><p>Investing means accepting uncertainty in exchange for a possible future return. Match each investment to a goal, time horizon, need for access, risk capacity, and total cost.</p><ul><li>Learn the difference between an individual share, a bond, a pooled fund, an index fund, and an ETF.</li><li>Compare broad diversification, fund fees, tax treatment, currency exposure, and the ability to stay invested through a downturn.</li><li>Model a regular contribution over time; test lower returns, inflation, fees, and missed contributions—not only the best case.</li></ul></div>
+          <aside class="stage-assignment"><strong>Field assignment</strong><p>Compare two diversified funds using their factsheets. Record benchmark, holdings, total fees, domicile, risks, and tax questions. Explain your choice without mentioning last year’s performance.</p></aside>
+        </article>
+        <article class="stage" id="stage-4">
+          <div class="stage-number">4</div>
+          <div><div class="stage-meta">Mastery · Govern and adapt</div><h3>Build a portfolio you can live with</h3><p>Strategic wealth architecture is a set of connected decisions—not a guarantee. A sound plan makes room for taxes, family obligations, liquidity, concentration, behaviour, and uncertainty.</p><ul><li>Write a one-page investment policy: goals, allocation range, contribution rule, rebalancing rule, and reasons to change course.</li><li>Stress-test job loss, market falls, higher rates, a currency move, and a delayed property sale. Identify what you would do before it happens.</li><li>Treat leverage and “arbitrage” claims as risk questions: confirm financing costs, taxes, liquidity, counterparty risk, and exit conditions.</li></ul></div>
+          <aside class="stage-assignment"><strong>Mastery simulation</strong><p>Draft a household plan for a 20% market fall and six months without earned income. Define cash available, obligations due, and decisions you will postpone.</p></aside>
+        </article>
+      </div>
+    </section>
+
+    <section class="shortcuts" aria-labelledby="shortcuts-title">
+      <div><span class="kicker">Uncommon resources &amp; useful shortcuts</span><h2 id="shortcuts-title">Better questions beat secret tricks.</h2><p>Use primary sources and slow down whenever a product is hard to explain. The shortest route is usually a clear process, not a higher-risk bet.</p></div>
+      <div class="shortcut-list">
+        <div class="shortcut-item"><strong>Read the source document</strong>Fund factsheets, fee schedules, loan agreements, tax certificates, and official benefit rules beat marketing summaries.</div>
+        <div class="shortcut-item"><strong>Use a one-page money map</strong>List accounts, beneficiaries, policies, debts, renewal dates, and a trusted contact. Keep it private and up to date.</div>
+        <div class="shortcut-item"><strong>Automate the boring part</strong>Schedule an affordable saving or investment contribution after payday; review annually and when life changes.</div>
+        <div class="shortcut-item"><strong>Find independent help</strong>Check adviser credentials and how they are paid. Ask what is excluded, what it costs, and whether advice is regulated in your jurisdiction.</div>
+        <div class="shortcut-item"><strong>Use a cooling-off rule</strong>For an unfamiliar investment, write down the thesis, worst case, fees, and exit conditions; wait before committing.</div>
+        <div class="shortcut-item"><strong>South African starting points</strong>SARS guidance, FSCA consumer education, National Treasury, and product-provider disclosures. Rules and thresholds change—check current official sources.</div>
+      </div>
+    </section>
+
+    <section class="practice-section" id="practice" aria-labelledby="practice-title">
+      <div class="section-heading">
+        <div><span class="kicker">Interactive practice lab</span><h2 id="practice-title">Run the numbers before the risk.</h2></div>
+        <p>Change the assumptions and see how borrowing cost affects the result. This simplified example excludes tax, fees, repayments, and price volatility.</p>
+      </div>
+      <div class="simulator">
+        <div>
+          <h3>A one-year leverage thought experiment</h3>
+          <p class="simulator-intro">Compare investing only your own capital with investing that capital plus a loan. The asset return is uncertain; the borrowing cost is still owed.</p>
+          <div class="field-grid">
+            <div class="field"><label for="ownCapital">Your capital</label><input id="ownCapital" type="number" min="0" step="1000" value="100000"></div>
+            <div class="field"><label for="borrowedCapital">Borrowed capital</label><input id="borrowedCapital" type="number" min="0" step="1000" value="50000"></div>
+            <div class="field"><label for="assetReturn">Asset return (%)</label><input id="assetReturn" type="number" min="-100" max="200" step="0.5" value="8"></div>
+            <div class="field"><label for="debtCost">Borrowing cost (%)</label><input id="debtCost" type="number" min="0" max="200" step="0.5" value="12"></div>
+          </div>
+          <p class="sim-warning">A negative result can exceed the loss on your own capital. In real life, loan terms, collateral calls, tax, liquidity, and compounding make leverage more complex.</p>
+        </div>
+        <div>
+          <div class="sim-results" aria-live="polite">
+            <div class="sim-result"><span>Unlevered gain / loss</span><strong id="unleveredResult">—</strong></div>
+            <div class="sim-result"><span>Leveraged gain / loss after interest</span><strong id="leveragedResult">—</strong></div>
+            <div class="sim-result"><span>Leveraged return on your capital</span><strong id="equityReturnResult">—</strong></div>
+          </div>
+          <p class="sim-warning" id="simulationExplanation">Illustration only. A positive expected spread is not risk-free arbitrage: returns are uncertain, but debt obligations are contractual.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="glossary-section" id="glossary" aria-labelledby="glossary-title">
+      <div class="section-heading">
+        <div><span class="kicker">The language of money</span><h2 id="glossary-title">A glossary for real life.</h2></div>
+        <p>Definitions are practical, not legal or tax advice. Some terms—especially benefits, funds, and tax treatments—vary by country and by product.</p>
+      </div>
+      <div class="glossary-tools">
+        <label class="search-wrap"><span class="search-icon" aria-hidden="true">⌕</span><span class="sr-only">Search concepts</span><input id="termSearch" class="search-input" type="search" placeholder="Search a term or idea…" autocomplete="off"></label>
+        <div class="filters" role="group" aria-label="Filter glossary by category">
+          <button class="filter-chip" type="button" data-filter="all" aria-pressed="true">All concepts</button>
+          <button class="filter-chip" type="button" data-filter="Income" aria-pressed="false">Income</button>
+          <button class="filter-chip" type="button" data-filter="Assets" aria-pressed="false">Assets</button>
+          <button class="filter-chip" type="button" data-filter="Capital &amp; debt" aria-pressed="false">Capital &amp; debt</button>
+          <button class="filter-chip" type="button" data-filter="Investing" aria-pressed="false">Investing</button>
+          <button class="filter-chip" type="button" data-filter="Life events" aria-pressed="false">Life events</button>
+        </div>
+      </div>
+      <p id="glossaryCount" class="glossary-count" aria-live="polite"></p>
+      <div id="termGrid" class="term-grid"></div>
+      <p id="emptyState" class="empty-state">No matching concepts. Try a shorter search or choose “All concepts”.</p>
+    </section>
+    <p class="disclaimer"><strong>Important:</strong> This field guide is educational and is not personal financial, investment, legal, or tax advice. Products, tax rules, social grants, and retirement-fund rules depend on your circumstances and jurisdiction; South African rules can change. Verify current details with official sources and a suitably qualified professional before acting. Investments can lose value. No return is guaranteed.</p>
+  </main>
+  <footer>Learn with curiosity. Decide with care. <a href="./index.html">Return to your budget tracker →</a></footer>
+  <script>
+    const concepts = [
+      { term: "Assets", category: "Assets", definition: "Things you own or control that have economic value, such as cash, investments, or property. Use a realistic current value, and remember that an asset may be difficult or costly to sell.", example: "A home is an asset; its bond is a separate liability." },
+      { term: "Liabilities", category: "Capital & debt", definition: "Amounts you owe, including loans, credit-card balances, and a home bond. Track the outstanding balance, interest rate, fees, and repayment terms.", example: "Net worth = assets − liabilities." },
+      { term: "Salary", category: "Income", definition: "Regular compensation from employment, usually paid monthly. Gross salary is before deductions; take-home pay is what arrives after tax and other deductions.", example: "Build a budget from dependable net pay, not gross pay." },
+      { term: "Commission", category: "Income", definition: "Variable pay linked to sales, performance, or another agreed measure. It may be delayed, clawed back, seasonal, and taxed differently from how it feels in your bank account.", example: "Budget essentials from base pay where possible; plan variable pay separately." },
+      { term: "Bonus", category: "Income", definition: "Extra compensation that may depend on performance, company results, or discretion. It is not necessarily guaranteed or recurring.", example: "Decide its purpose before payday: tax, debt, reserve, or a chosen goal." },
+      { term: "Dividends from investments", category: "Investing", definition: "A distribution of company profits to shareholders, if declared. Dividends can change or stop; total return also includes changes in investment value.", example: "A dividend is not a guaranteed salary or free extra return." },
+      { term: "Rental property", category: "Assets", definition: "Property held to earn rent or possibly appreciate. Compare rent after vacancy, repairs, rates, insurance, management, taxes, finance, and time—not just the advertised yield.", example: "Net rental cash flow can be negative even when the property price rises." },
+      { term: "Savings", category: "Assets", definition: "Money set aside for near-term needs or goals, often in cash or a deposit account. Prioritise access and capital stability while checking fees, deposit protection, and inflation.", example: "Emergency savings and long-term investments serve different jobs." },
+      { term: "Retirement funds", category: "Investing", definition: "Investments or regulated arrangements intended to help fund life after work. Access, tax treatment, contribution limits, and preservation rules depend on the specific fund and local law.", example: "Read the fund rules and fee disclosures before making changes." },
+      { term: "Inheritance", category: "Life events", definition: "Money or property received from someone’s estate. Settlement can take time, and legal, estate-duty, tax, debt, and family considerations may apply.", example: "Wait for confirmed ownership and obligations before committing the funds." },
+      { term: "Sale of an asset or property", category: "Assets", definition: "Proceeds received when you sell something you own. The sale price is not the profit: deduct outstanding debt, selling costs, improvements where relevant, and any tax due.", example: "Sale proceeds ≠ spendable cash until obligations are settled." },
+      { term: "Gift or donation", category: "Life events", definition: "Money or property voluntarily given, usually without an exchange of equal value. Document material gifts and check local tax, reporting, and donor conditions.", example: "Confirm whether a contribution is a gift, loan, or ownership stake." },
+      { term: "Contribution from a third party", category: "Income", definition: "Money paid toward your costs or goals by someone else, such as a family member or partner. Agree whether it is a gift, loan, shared expense, or investment and record the terms.", example: "Clarity now can prevent disputes later." },
+      { term: "Allowance", category: "Income", definition: "A regular or occasional amount provided for personal or household spending, often by a parent, guardian, or employer. It may come with conditions and may not continue indefinitely.", example: "Treat a dependable allowance as cash flow, but plan for its end." },
+      { term: "Bursary", category: "Life events", definition: "Financial support for education, sometimes with academic, work-back, or repayment conditions. The award letter determines what it covers and whether any amount must be repaid.", example: "Check tuition, living-cost limits, renewal criteria, and obligations." },
+      { term: "Business operating income", category: "Income", definition: "Income generated by a business’s ordinary activities, usually considered before financing costs and some taxes or accounting adjustments. It is not automatically the owner’s personal take-home income.", example: "Separate business cash, tax set-asides, and personal drawings." },
+      { term: "Company profits", category: "Income", definition: "The amount left under an accounting measure after specified expenses. Accounting profit, cash in the bank, distributable profit, and the owner’s personal income are not interchangeable.", example: "Check the statement and definition before relying on a profit figure." },
+      { term: "Company sale or sale of an interest in a company", category: "Life events", definition: "Proceeds from selling all or part of an ownership stake or a business. Valuation, debt, transaction costs, tax, warranties, and payment timing affect what the seller actually receives.", example: "A headline valuation is not the same as net cash proceeds." },
+      { term: "Cryptocurrency", category: "Investing", definition: "A broad category of digital assets that use cryptographic systems; prices can be highly volatile and many assets lack cash flows or established protections. Custody, scams, platform failure, regulation, and tax create additional risks.", example: "Only risk money you can afford to lose; verify custody and local rules." },
+      { term: "Debt capital", category: "Capital & debt", definition: "Money raised by borrowing, with contractual repayment and usually interest. It can fund an asset or business, but repayments remain due even if income or asset values fall.", example: "Compare the effective borrowing cost with uncertain returns and downside capacity." },
+      { term: "Disability or social grant", category: "Life events", definition: "Public support that may be available when eligibility criteria are met. Amounts, means tests, reviews, and application rules vary by grant and jurisdiction; an award may need reassessment.", example: "Use the relevant government agency’s current guidance." },
+      { term: "Divorce settlement", category: "Life events", definition: "A legally agreed or ordered division of assets, debts, maintenance, or other obligations after separation. Timing and tax consequences depend on the order, agreement, fund rules, and local law.", example: "Get independent legal and tax advice before transferring assets." },
+      { term: "Equity capital", category: "Capital & debt", definition: "Money invested in exchange for an ownership interest. Equity has no fixed repayment schedule like a loan, but investors may lose some or all of their capital and share control or future profits.", example: "Understand valuation, dilution, voting rights, and exit terms." },
+      { term: "Gambling winnings", category: "Income", definition: "Money won through betting or games of chance. Outcomes are uncertain, losses can exceed expectations, and tax treatment varies by jurisdiction and activity.", example: "Never treat a possible win as income for essential commitments." },
+      { term: "Gratuity", category: "Income", definition: "A lump sum paid in recognition of service or under an employment, contract, or statutory arrangement. The exact meaning, eligibility, and tax treatment depend on the governing rules.", example: "Confirm the gross amount, deductions, and payment basis." },
+      { term: "Income from previous employment", category: "Income", definition: "Pay, leave amounts, severance, or other amounts received after a job ends. Different components may be taxed or treated differently; check payslips and separation documents.", example: "Keep enough aside until final deductions and benefits are reconciled." },
+      { term: "Loan", category: "Capital & debt", definition: "Money advanced under an agreement to be repaid, often with interest and fees. Understand the total cost, rate type, term, security, missed-payment consequences, and early-settlement rules.", example: "A monthly instalment alone does not reveal the loan’s full cost." },
+      { term: "Lobola", category: "Life events", definition: "A customary marriage-related practice involving negotiated gifts or transfers between families. Customs and legal implications vary; discuss affordability and expectations openly, and seek local guidance when needed.", example: "Plan for agreed obligations without relying on high-cost debt." },
+      { term: "Lottery winnings", category: "Income", definition: "A prize paid after a lottery draw. The amount, payout rules, verification process, and tax treatment depend on the operator and jurisdiction; beware of advance-fee scams.", example: "Verify through the official operator, never a message asking for a fee." },
+      { term: "Maintenance (informal agreement)", category: "Life events", definition: "Money paid by agreement to support a child or former partner without a formal order. Informal arrangements can be hard to enforce; record the amount, timing, purpose, and review process, and get legal advice if needed.", example: "A clear record protects both payer and recipient." },
+      { term: "Maturing investments", category: "Investing", definition: "Investments reaching a scheduled end date, such as a fixed deposit or bond. The maturity value may be affected by product terms, tax, fees, and reinvestment rates.", example: "Decide where proceeds go before maturity, and check renewal defaults." },
+      { term: "Pension", category: "Investing", definition: "A retirement benefit or income arrangement; the precise meaning depends on the system and product. A pension fund may hold investments, while a pension payment is income—check the scheme rules.", example: "Ask whether a quoted value is a fund balance or a promised benefit." },
+      { term: "Provident fund", category: "Investing", definition: "An employer-linked retirement fund whose benefits and withdrawal rules are set by legislation and fund rules. Tax, preservation, and access can change; confirm current rules before withdrawing.", example: "A withdrawal can reduce future retirement income and trigger tax." },
+      { term: "Sale of shares", category: "Assets", definition: "Selling ownership units in a company or fund. Net proceeds depend on price, dealing fees, tax, settlement timing, and any currency conversion.", example: "Selling a share converts an investment into cash; it does not guarantee a profit." },
+      { term: "Settlement", category: "Capital & debt", definition: "The final payment or process that closes an obligation or transaction. A settlement quote can differ from the displayed balance because of interest, fees, discounts, or date validity.", example: "Request a dated written settlement figure before paying." },
+      { term: "Tax rebate", category: "Income", definition: "A tax credit, refund, or reduction permitted by the relevant tax rules; the exact meaning varies. A refund may reflect overpaid tax, not a bonus or guaranteed future benefit.", example: "Use official tax guidance and retain supporting records." },
+      { term: "Transfer to or from approved funds", category: "Investing", definition: "Moving retirement or other permitted benefits between qualifying funds under applicable rules. Eligibility, deadlines, tax treatment, and preservation requirements depend on the fund and law.", example: "Confirm whether the move is a transfer or a taxable withdrawal." },
+      { term: "Trust income", category: "Income", definition: "A distribution or entitlement arising from a trust. The trust deed, trustee decision, beneficiary rights, timing, and tax reporting determine what it means for you.", example: "Keep the distribution statement and ask who handles tax reporting." },
+      { term: "Virtual currency", category: "Investing", definition: "A digital representation of value used in an online ecosystem; the term can cover assets that are not legal tender and may not have a central issuer. Meaning and regulation vary.", example: "Do not assume virtual currency has the same protections as bank money." },
+      { term: "Index fund", category: "Investing", definition: "A fund designed to track a stated market index before fees and tracking differences. It can offer broad exposure, but still carries market risk and may be concentrated in particular companies or countries.", example: "Know what the index includes and how it is weighted." },
+      { term: "ETF (exchange-traded fund)", category: "Investing", definition: "A fund whose units trade on an exchange during market hours. ETFs may track an index or use another strategy; spreads, fees, liquidity, structure, and tax matter.", example: "An ETF is a fund format, not a guarantee of diversification or safety." },
+      { term: "Leverage", category: "Capital & debt", definition: "Using borrowed money or other exposure to amplify an investment. Gains and losses can both grow; financing costs, margin calls, forced sales, and time pressure can make losses severe.", example: "Model a large fall and the cash needed to keep the position open." },
+      { term: "Compound growth", category: "Investing", definition: "Growth on both the original amount and previous growth over time. Compounding also works in reverse on debt; fees, taxes, inflation, and interruptions reduce outcomes.", example: "Time and consistency help, but no rate of return is assured." },
+      { term: "Diversification", category: "Investing", definition: "Spreading exposure across different investments to reduce dependence on any one. It can reduce some risks but cannot prevent losses when markets fall broadly.", example: "Owning many funds that hold the same companies may not diversify much." },
+      { term: "Liquidity", category: "Assets", definition: "How readily an asset can be converted to cash at a fair price. Cash is generally liquid; property and private-company interests can take months to sell.", example: "Match accessible money to the timing of your obligations." },
+      { term: "Inflation", category: "Investing", definition: "A general rise in prices that reduces what a unit of money can buy over time. A balance can grow in nominal terms yet lose purchasing power after inflation.", example: "Compare returns after fees, tax, and inflation." },
+      { term: "Capital gains", category: "Assets", definition: "The increase in an asset’s value between acquisition and disposal, before applicable costs and tax. An unrealised gain is not cash until sale, and tax rules vary.", example: "Keep purchase records and allowable-cost documentation." },
+      { term: "Cash flow", category: "Income", definition: "Money moving into and out of a person’s or business’s accounts over a period. Positive cash flow does not necessarily mean wealth is growing if debt or asset values are changing.", example: "Track timing as well as totals." },
+      { term: "Net worth", category: "Assets", definition: "A point-in-time estimate of assets minus liabilities. It is useful for tracking direction, but it does not show how quickly assets can be accessed or the quality of your cash flow.", example: "Update using consistent, realistic valuations." },
+      { term: "Arbitrage", category: "Investing", definition: "Seeking to capture a price difference for the same or closely related asset in different markets. Apparent opportunities may vanish after fees, taxes, timing, currency, settlement, and execution risk.", example: "If it sounds risk-free and effortless, investigate the hidden risks." }
+    ];
+
+    const termGrid = document.getElementById("termGrid");
+    const searchInput = document.getElementById("termSearch");
+    const countLabel = document.getElementById("glossaryCount");
+    const emptyState = document.getElementById("emptyState");
+    let activeFilter = "all";
+
+    function renderTerms() {
+      const query = searchInput.value.trim().toLocaleLowerCase();
+      const visible = concepts.filter(item => {
+        const matchesFilter = activeFilter === "all" || item.category === activeFilter;
+        const matchesQuery = `${item.term} ${item.definition} ${item.example} ${item.category}`.toLocaleLowerCase().includes(query);
+        return matchesFilter && matchesQuery;
+      }).sort((a, b) => a.term.localeCompare(b.term));
+      termGrid.replaceChildren(...visible.map(item => {
+        const card = document.createElement("article");
+        card.className = "term-card";
+        const category = document.createElement("span");
+        category.className = "term-category";
+        category.textContent = item.category;
+        const title = document.createElement("h3");
+        title.textContent = item.term;
+        const definition = document.createElement("p");
+        definition.textContent = item.definition;
+        const example = document.createElement("span");
+        example.className = "term-example";
+        example.textContent = item.example;
+        card.append(category, title, definition, example);
+        return card;
+      }));
+      countLabel.textContent = `Showing ${visible.length} of ${concepts.length} concepts`;
+      emptyState.style.display = visible.length ? "none" : "block";
+    }
+
+    document.getElementById("termTotal").textContent = `${concepts.length}`;
+    searchInput.addEventListener("input", renderTerms);
+    document.querySelectorAll(".filter-chip").forEach(button => {
+      button.addEventListener("click", () => {
+        activeFilter = button.dataset.filter;
+        document.querySelectorAll(".filter-chip").forEach(chip => chip.setAttribute("aria-pressed", String(chip === button)));
+        renderTerms();
+      });
+    });
+
+    const numberFormat = new Intl.NumberFormat("en-ZA", { style: "currency", currency: "ZAR", maximumFractionDigits: 0 });
+    const simulationInputs = ["ownCapital", "borrowedCapital", "assetReturn", "debtCost"].map(id => document.getElementById(id));
+    function updateSimulation() {
+      const [own, debt, returnPercent, costPercent] = simulationInputs.map(input => Number(input.value));
+      const valid = simulationInputs.every(input => {
+        const value = Number(input.value);
+        const min = input.min === "" ? -Infinity : Number(input.min);
+        const max = input.max === "" ? Infinity : Number(input.max);
+        return input.value !== "" && Number.isFinite(value) && value >= min && value <= max;
+      });
+      if (!valid) {
+        document.getElementById("unleveredResult").textContent = "Check inputs";
+        document.getElementById("leveragedResult").textContent = "Check inputs";
+        document.getElementById("equityReturnResult").textContent = "Check inputs";
+        return;
+      }
+      const unleveredGain = own * returnPercent / 100;
+      const leveragedGain = (own + debt) * returnPercent / 100 - debt * costPercent / 100;
+      const equityReturn = own > 0 ? leveragedGain / own * 100 : null;
+      document.getElementById("unleveredResult").textContent = numberFormat.format(unleveredGain);
+      document.getElementById("leveragedResult").textContent = numberFormat.format(leveragedGain);
+      document.getElementById("equityReturnResult").textContent = equityReturn === null ? "N/A" : `${equityReturn.toFixed(1)}%`;
+      document.getElementById("simulationExplanation").textContent = leveragedGain < 0
+        ? "In this scenario the leveraged position loses money after interest. The debt still has to be repaid, and a real loss can force a sale."
+        : "This scenario shows a positive result, not a guaranteed or risk-free arbitrage. Returns are uncertain; debt obligations are contractual.";
+    }
+    simulationInputs.forEach(input => input.addEventListener("input", updateSimulation));
+    renderTerms();
+    updateSimulation();
+  </script>
+</body>
+</html>

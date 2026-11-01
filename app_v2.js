@@ -670,6 +670,34 @@ for (const [locale, rows] of Object.entries(localeRows)) {
 
 Object.assign(translations["en-ZA"], { placeholderItem: "Item Name" });
 Object.assign(translations["en-ZM"], { placeholderItem: "Item Name" });
+Object.assign(translations["en-ZA"], {
+  taxShelterLabel: "Tax-free investment (TFI)",
+  retirementTransferLabel: "Preservation fund transfer",
+  infrastructureAllowanceLabel: "Section 12B / 12BA allowance",
+  taxRefundLabel: "Tax rebate / assessment refund",
+  taxShelterTooltip: "South African terms follow local rules; products serving similar purposes in other countries are not necessarily equivalent."
+});
+translations["en-US"] = Object.assign({}, translations["en-ZA"], {
+  taxShelterLabel: "Roth IRA",
+  retirementTransferLabel: "Rollover 401(k) / Traditional IRA transfer",
+  infrastructureAllowanceLabel: "Section 179 deduction / Investment Tax Credit",
+  taxRefundLabel: "Tax refund",
+  taxShelterTooltip: "US terms follow US rules and are not direct equivalents to South African products."
+});
+translations["en-GB"] = Object.assign({}, translations["en-ZA"], {
+  taxShelterLabel: "ISA",
+  retirementTransferLabel: "SIPP transfer",
+  infrastructureAllowanceLabel: "Capital allowances / Annual Investment Allowance",
+  taxRefundLabel: "Tax repayment",
+  taxShelterTooltip: "UK terms follow UK rules and are not direct equivalents to South African products."
+});
+translations["en-CA"] = Object.assign({}, translations["en-ZA"], {
+  taxShelterLabel: "TFSA",
+  retirementTransferLabel: "RRSP transfer",
+  infrastructureAllowanceLabel: "Canadian investment tax provisions",
+  taxRefundLabel: "Tax refund",
+  taxShelterTooltip: "Canadian terms follow Canadian rules and are not direct equivalents to South African products."
+});
 
 function getTranslation(key, lang) {
   if (translations[lang] && translations[lang][key]) return translations[lang][key];
@@ -687,6 +715,7 @@ function calculateBudget() {
   const income = parseFloat(document.getElementById('income').value) || 0;
   const currency = document.getElementById('currencySelector').value;
   let lang = document.getElementById('langSelector').value;
+  updateInternationalTooltipOverride();
 
   // Standardization guards to guarantee browser Intl engine formatting doesn't crash on raw ISO short-codes
   const mapping = { "fr": "fr-FR", "pt": "pt-PT", "zh": "zh-CN", "es": "es-ES", "de": "de-DE", "hi": "hi-IN", "ar": "ar-AE", "ru": "ru-RU", "ja": "ja-JP", "xh": "xh-ZA", "st": "st-ZA" };
@@ -804,6 +833,43 @@ function changeLanguage() {
   });
   applyReportLanguage(fullLangCode);
   calculateBudget();
+}
+
+function updateInternationalTooltipOverride() {
+  const link = document.querySelector('.finance-101-link');
+  if (!link) return;
+
+  const language = document.getElementById('langSelector').value;
+  const currency = document.getElementById('currencySelector').value;
+  const localeRegions = { "en-ZA": "ZA", "en-US": "US", "en-GB": "GB", "en-CA": "CA" };
+  const currencyRegions = { ZAR: "ZA", USD: "US", GBP: "GB", CAD: "CA" };
+  const region = localeRegions[language] || currencyRegions[currency] || "";
+  const translation = region === "US" ? translations["en-US"]
+    : region === "GB" ? translations["en-GB"]
+      : region === "CA" ? translations["en-CA"]
+        : translations["en-ZA"];
+  const relatedTerms = [
+    translation.taxShelterLabel,
+    translation.retirementTransferLabel,
+    translation.infrastructureAllowanceLabel,
+    translation.taxRefundLabel
+  ].join("; ");
+  const description = region
+    ? `${translation.taxShelterTooltip} Finance 101 terminology: ${relatedTerms}.`
+    : "Select a country-specific English language option or currency to show regional account terminology.";
+
+  const guideUrl = new URL(link.getAttribute('href'), window.location.href);
+  if (region) guideUrl.searchParams.set('region', region);
+  else guideUrl.searchParams.delete('region');
+  const guideLanguage = {
+    es: "es", fr: "fr", de: "de", zh: "zh", hi: "hi",
+    ar: "ar", pt: "pt", ru: "ru", ja: "ja"
+  }[language.split('-')[0]];
+  if (guideLanguage) guideUrl.searchParams.set('lang', guideLanguage);
+  else guideUrl.searchParams.delete('lang');
+  link.href = guideUrl.toString();
+  link.title = description;
+  link.setAttribute('aria-label', `Explore Finance 101. ${description}`);
 }
 
 function updateMonthlyRecordLanguage(langCode) {

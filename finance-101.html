@@ -34,6 +34,7 @@
     .brand-mark { width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.4); border-radius: 50%; color: #f3c878; font-family: Georgia, serif; font-size: 1.1rem; }
     .top-links { display: flex; align-items: center; gap: 22px; color: #d8e3dd; font-size: .83rem; }
     .top-links a { white-space: nowrap; }
+    .guide-language { max-width: 150px; min-height: 34px; padding: 5px 8px; border: 1px solid rgba(255,255,255,.3); border-radius: 6px; color: #fff; background: #173c32; font-size: .75rem; }
     .top-links a { text-decoration: none; }
     .top-links a:hover { color: #f3c878; }
     .hero { position: relative; overflow: hidden; color: #fff; background: radial-gradient(ellipse at 82% 30%, rgba(216,166,87,.24), transparent 28%), linear-gradient(120deg, #102a24 0%, #164b3c 63%, #235c49 100%); }
@@ -120,6 +121,7 @@
     .term-card[hidden] { display: none; }
     .term-category { color: #8b6835; font-size: .64rem; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
     .term-card h3 { margin: 6px 0 5px; font-family: Georgia, serif; font-size: 1.13rem; font-weight: 500; }
+    .term-region-note { display: inline-block; margin: 0 0 8px; padding: 3px 7px; border-radius: 999px; color: #305b48; background: #e8efe7; font-size: .64rem; font-weight: 750; }
     .term-card p { margin: 0; color: #5e6d65; font-size: .81rem; line-height: 1.55; }
     .term-example { display: block; margin-top: 9px; color: #305b48; font-size: .74rem; font-weight: 650; }
     .empty-state { display: none; padding: 30px; border: 1px dashed #cbd4cb; border-radius: 8px; color: var(--muted); text-align: center; }
@@ -172,6 +174,19 @@
     <div class="topbar-inner">
       <a class="brand" href="./index.html"><span class="brand-mark" aria-hidden="true">✳</span> Wealth Field Guide</a>
       <nav class="top-links" aria-label="Page navigation">
+        <label class="sr-only" for="guideLanguage">Guide language</label>
+        <select id="guideLanguage" class="guide-language" aria-label="Guide language">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="de">Deutsch</option>
+          <option value="zh">中文</option>
+          <option value="hi">हिन्दी</option>
+          <option value="ar">العربية</option>
+          <option value="pt">Português</option>
+          <option value="ru">Русский</option>
+          <option value="ja">日本語</option>
+        </select>
         <a href="#learning-path">Learning path</a>
         <a href="#practice">Practice lab</a>
         <a href="#glossary">A–Z glossary</a>
@@ -297,6 +312,9 @@
           <button class="filter-chip" type="button" data-filter="Capital &amp; debt" aria-pressed="false">Capital &amp; debt</button>
           <button class="filter-chip" type="button" data-filter="Investing" aria-pressed="false">Investing</button>
           <button class="filter-chip" type="button" data-filter="Life events" aria-pressed="false">Life events</button>
+          <button class="filter-chip" type="button" data-filter="Tax &amp; planning" aria-pressed="false">Tax &amp; planning</button>
+          <button class="filter-chip" type="button" data-filter="Planning &amp; risk" aria-pressed="false">Planning &amp; risk</button>
+          <button class="filter-chip" type="button" data-filter="Spending" aria-pressed="false">Spending</button>
         </div>
       </div>
       <p id="glossaryCount" class="glossary-count" aria-live="polite"></p>
@@ -306,6 +324,7 @@
     <p class="disclaimer"><strong>Important:</strong> This field guide is educational and is not personal financial, investment, legal, or tax advice. Products, tax rules, social grants, and retirement-fund rules depend on your circumstances and jurisdiction; South African rules can change. Verify current details with official sources and a suitably qualified professional before acting. Investments can lose value. No return is guaranteed.</p>
   </main>
   <footer>Learn with curiosity. Decide with care. <a href="./index.html">Return to your budget tracker →</a></footer>
+  <script src="./finance-101-translations.js"></script>
   <script>
     const concepts = [
       { term: "Assets", category: "Assets", definition: "Things you own or control that have economic value, such as cash, investments, or property. Use a realistic current value, and remember that an asset may be difficult or costly to sell.", example: "A home is an asset; its bond is a separate liability." },
@@ -323,7 +342,7 @@
       { term: "Contribution from a third party", category: "Income", definition: "Money paid toward your costs or goals by someone else, such as a family member or partner. Agree whether it is a gift, loan, shared expense, or investment and record the terms.", example: "Clarity now can prevent disputes later." },
       { term: "Allowance", category: "Income", definition: "A regular or occasional amount provided for personal or household spending, often by a parent, guardian, or employer. It may come with conditions and may not continue indefinitely.", example: "Treat a dependable allowance as cash flow, but plan for its end." },
       { term: "Bursary", category: "Life events", definition: "Financial support for education, sometimes with academic, work-back, or repayment conditions. The award letter determines what it covers and whether any amount must be repaid.", example: "Check tuition, living-cost limits, renewal criteria, and obligations." },
-      { term: "Business operating income", category: "Income", definition: "Income generated by a business’s ordinary activities, usually considered before financing costs and some taxes or accounting adjustments. It is not automatically the owner’s personal take-home income.", example: "Separate business cash, tax set-asides, and personal drawings." },
+      { term: "Business operating income (EBITDA)", category: "Income", definition: "EBITDA means earnings before interest, tax, depreciation, and amortisation, a measure often used to compare business operating performance. It is not revenue, net profit, or cash flow, and it is not identical to operating income under every reporting convention.", example: "Ask how the figure is calculated and compare it with actual cash flow." },
       { term: "Company profits", category: "Income", definition: "The amount left under an accounting measure after specified expenses. Accounting profit, cash in the bank, distributable profit, and the owner’s personal income are not interchangeable.", example: "Check the statement and definition before relying on a profit figure." },
       { term: "Company sale or sale of an interest in a company", category: "Life events", definition: "Proceeds from selling all or part of an ownership stake or a business. Valuation, debt, transaction costs, tax, warranties, and payment timing affect what the seller actually receives.", example: "A headline valuation is not the same as net cash proceeds." },
       { term: "Cryptocurrency", category: "Investing", definition: "A broad category of digital assets that use cryptographic systems; prices can be highly volatile and many assets lack cash flows or established protections. Custody, scams, platform failure, regulation, and tax create additional risks.", example: "Only risk money you can afford to lose; verify custody and local rules." },
@@ -343,7 +362,12 @@
       { term: "Provident fund", category: "Investing", definition: "An employer-linked retirement fund whose benefits and withdrawal rules are set by legislation and fund rules. Tax, preservation, and access can change; confirm current rules before withdrawing.", example: "A withdrawal can reduce future retirement income and trigger tax." },
       { term: "Sale of shares", category: "Assets", definition: "Selling ownership units in a company or fund. Net proceeds depend on price, dealing fees, tax, settlement timing, and any currency conversion.", example: "Selling a share converts an investment into cash; it does not guarantee a profit." },
       { term: "Settlement", category: "Capital & debt", definition: "The final payment or process that closes an obligation or transaction. A settlement quote can differ from the displayed balance because of interest, fees, discounts, or date validity.", example: "Request a dated written settlement figure before paying." },
-      { term: "Tax rebate", category: "Income", definition: "A tax credit, refund, or reduction permitted by the relevant tax rules; the exact meaning varies. A refund may reflect overpaid tax, not a bonus or guaranteed future benefit.", example: "Use official tax guidance and retain supporting records." },
+      { term: "Tax rebate", category: "Income", regionalTerms: {
+        ZA: { label: "Tax rebate / assessment refund", note: "South African tax terminology", definition: "A South African tax rebate may reduce tax payable; an assessment refund generally returns tax overpaid after assessment. The terms are not interchangeable, and SARS rules determine eligibility." },
+        US: { label: "Tax refund", note: "US tax terminology", definition: "A US tax refund commonly returns tax paid in excess of the amount owed; it is not automatically a tax credit or extra income. IRS rules and the taxpayer’s return determine the result." },
+        GB: { label: "Tax repayment", note: "UK tax terminology", definition: "A UK tax repayment is generally tax returned when HMRC determines too much was paid. Eligibility and process depend on the taxpayer’s circumstances and HMRC rules." },
+        CA: { label: "Tax refund", note: "Canadian tax terminology", definition: "A Canadian tax refund commonly returns tax paid in excess of the amount owed after assessment. CRA rules and the taxpayer’s return determine the result." }
+      }, category: "Income", definition: "A tax credit, refund, or reduction permitted by the relevant tax rules; the exact meaning varies. A refund may reflect overpaid tax, not a bonus or guaranteed future benefit.", example: "Use official tax guidance and retain supporting records." },
       { term: "Transfer to or from approved funds", category: "Investing", definition: "Moving retirement or other permitted benefits between qualifying funds under applicable rules. Eligibility, deadlines, tax treatment, and preservation requirements depend on the fund and law.", example: "Confirm whether the move is a transfer or a taxable withdrawal." },
       { term: "Trust income", category: "Income", definition: "A distribution or entitlement arising from a trust. The trust deed, trustee decision, beneficiary rights, timing, and tax reporting determine what it means for you.", example: "Keep the distribution statement and ask who handles tax reporting." },
       { term: "Virtual currency", category: "Investing", definition: "A digital representation of value used in an online ecosystem; the term can cover assets that are not legal tender and may not have a central issuer. Meaning and regulation vary.", example: "Do not assume virtual currency has the same protections as bank money." },
@@ -357,7 +381,67 @@
       { term: "Capital gains", category: "Assets", definition: "The increase in an asset’s value between acquisition and disposal, before applicable costs and tax. An unrealised gain is not cash until sale, and tax rules vary.", example: "Keep purchase records and allowable-cost documentation." },
       { term: "Cash flow", category: "Income", definition: "Money moving into and out of a person’s or business’s accounts over a period. Positive cash flow does not necessarily mean wealth is growing if debt or asset values are changing.", example: "Track timing as well as totals." },
       { term: "Net worth", category: "Assets", definition: "A point-in-time estimate of assets minus liabilities. It is useful for tracking direction, but it does not show how quickly assets can be accessed or the quality of your cash flow.", example: "Update using consistent, realistic valuations." },
-      { term: "Arbitrage", category: "Investing", definition: "Seeking to capture a price difference for the same or closely related asset in different markets. Apparent opportunities may vanish after fees, taxes, timing, currency, settlement, and execution risk.", example: "If it sounds risk-free and effortless, investigate the hidden risks." }
+      { term: "Arbitrage", category: "Investing", definition: "Seeking to capture a price difference for the same or closely related asset in different markets. Apparent opportunities may vanish after fees, taxes, timing, currency, settlement, and execution risk.", example: "If it sounds risk-free and effortless, investigate the hidden risks." },
+      { term: "Active income", category: "Income", definition: "Money earned by providing labour or services, such as wages, salary, or fees. It generally depends on continuing to work, though the exact tax classification varies.", example: "Plan for time off or job changes if your household relies on one paycheque." },
+      { term: "Wages", category: "Income", definition: "Pay for work, often calculated by the hour, day, or shift. Gross wages may differ from take-home pay after deductions, and variable hours can make monthly income less predictable.", example: "Budget from a conservative estimate when shifts or overtime vary." },
+      { term: "Passive income", category: "Income", definition: "Income from assets or activities that may require less day-to-day work once established, such as rent or investment distributions. It is rarely effortless: capital, maintenance, risk, and ongoing oversight still matter.", example: "Calculate net income after vacancy, costs, tax, and time." },
+      { term: "Insurance payout", category: "Life events", definition: "Money paid under an insurance policy after a covered event and a valid claim. The amount depends on policy wording, exclusions, limits, excesses, and the insurer’s assessment; tax treatment can vary.", example: "Keep the policy and claim decision, and check whether proceeds are taxable." },
+      { term: "Compound interest", category: "Investing", definition: "Interest calculated on the original amount plus previously added interest. The same mechanism increases the cost of unpaid debt; the realised result depends on rates, timing, fees, tax, and inflation.", example: "Compare the effective borrowing rate with a realistic after-cost investment return." },
+      { term: "Financial freedom number", category: "Planning & risk", definition: "An estimate of the assets or income needed to support a chosen lifestyle without relying on employment income. The result depends on spending, taxes, inflation, investment risk, time horizon, and withdrawal assumptions.", example: "Treat it as a planning estimate to revisit, not a guaranteed finish line." },
+      { term: "The 4% rule", category: "Planning & risk", definition: "A historical retirement-planning heuristic for an initial withdrawal of about 4% of a portfolio, adjusted for inflation in later years. It is not a guaranteed safe rate; market sequence, fees, taxes, currency, and retirement length matter.", example: "Stress-test several withdrawal rates and poor early-return periods." },
+      { term: "Low-cost index funds", category: "Investing", definition: "Index-tracking funds with comparatively low ongoing charges. Low cost can help preserve returns, but it does not remove market risk or guarantee broad diversification; compare like-for-like products and total investor costs.", example: "Check index coverage, tracking difference, fees, and platform charges." },
+      { term: "S&P 500", category: "Investing", definition: "A market-capitalisation-weighted index of large US companies selected under the index provider’s rules. It represents a slice of the US stock market, not the whole world, and its value can fall substantially.", example: "A fund tracking it has US-market and currency exposure for many investors." },
+      { term: "Expense ratio", category: "Investing", definition: "A fund’s annual operating expenses expressed as a percentage of its assets. It may not include every cost you pay, such as advice, platform fees, transaction charges, or bid–ask spreads.", example: "Compare the expense ratio alongside total costs and tracking difference." },
+      { term: "Cognitive bias (financial)", category: "Planning & risk", definition: "A mental shortcut that can distort money decisions, such as overconfidence, loss aversion, herd behaviour, or anchoring on a purchase price. Recognising a bias can help, but does not eliminate uncertainty.", example: "Write down your reasons and what evidence would change your mind." },
+      { term: "Capital gains tax (CGT)", category: "Tax & planning", definition: "Tax that may apply to a taxable capital gain when an asset is disposed of. The gain is not always simply the sale price minus purchase price; exemptions, allowable costs, inclusion rates, and rules depend on jurisdiction and circumstances.", example: "Keep acquisition and improvement records; check current SARS or local tax guidance." },
+      { term: "Tax-advantaged savings/investment account", searchTerms: "TFI tax-free investment Roth IRA ISA TFSA", regionalTerms: {
+        ZA: { label: "Tax-free investment (TFI)", note: "South African product · rules differ internationally", definition: "A South African tax-free investment account with eligible products and statutory contribution and withdrawal rules. It is not automatically equivalent to a Roth IRA, ISA, or TFSA." },
+        US: { label: "Roth IRA", note: "US retirement account · not a direct TFI equivalent", definition: "A US individual retirement account funded with after-tax contributions; qualified withdrawals may be tax-free under IRS rules. Eligibility, contribution limits, tax treatment, and withdrawal conditions differ from South African TFIs and UK ISAs." },
+        GB: { label: "ISA (Individual Savings Account)", note: "UK account · not a direct TFI equivalent", definition: "A UK tax-advantaged savings and investment account subject to HMRC rules, eligibility requirements, and annual subscription limits. Its rules and eligible products differ from South African TFIs and US Roth IRAs." },
+        CA: { label: "TFSA (Tax-Free Savings Account)", note: "Canadian account · Canadian rules apply", definition: "A Canadian registered account with tax treatment and contribution-room rules set by Canadian law. It is not the same product as a South African TFI, US Roth IRA, or UK ISA." }
+      }, category: "Tax & planning", definition: "Tax-advantaged savings or investment accounts are governed by country-specific rules. Eligibility, contribution limits, withdrawals, and qualifying products differ by jurisdiction.", example: "Verify local limits and penalties before contributing; similar labels do not make products equivalent." },
+      { term: "Real estate investment trust (REIT)", category: "Investing", definition: "A company or trust that owns, finances, or operates income-producing property and may distribute income under applicable rules. Publicly traded REIT units can fluctuate like shares; property, interest-rate, and concentration risks remain.", example: "Read the distribution policy, debt levels, property exposure, and fees." },
+      { term: "Unit trust / mutual fund", category: "Investing", definition: "A pooled investment in which investors own units or shares in a professionally managed portfolio. Holdings, dealing frequency, pricing, fees, tax treatment, and investor rights vary by structure and country.", example: "Read the fund factsheet and rules, not just its recent return." },
+      { term: "Preservation fund", category: "Investing", regionalTerms: {
+        ZA: { label: "Preservation fund", note: "South African retirement structure", definition: "A South African retirement vehicle that may receive qualifying retirement savings when employment ends, subject to current tax and fund rules. Access and withdrawal options are restricted and can affect future retirement income." },
+        US: { label: "Rollover 401(k) / Traditional IRA transfer", note: "US retirement transfer · rules differ", definition: "US retirement-plan rollovers may move eligible workplace-plan assets to another qualifying plan or IRA under IRS rules. This is not the same legal structure as a South African preservation fund; eligibility, deadlines, and tax consequences matter." },
+        GB: { label: "SIPP transfer", note: "UK pension transfer · rules differ", definition: "A transfer to a UK self-invested personal pension (SIPP) is governed by UK pension rules and provider terms. It is not the same legal structure as a South African preservation fund; check charges, access restrictions, and transfer safeguards." },
+        CA: { label: "RRSP transfer", note: "Canadian retirement transfer · rules differ", definition: "A transfer to a Canadian registered retirement savings plan (RRSP) is subject to Canadian eligibility and tax rules. It is not the same legal structure as a South African preservation fund." }
+      }, category: "Investing", definition: "In South Africa, a retirement vehicle that may receive qualifying retirement savings when employment ends, subject to current tax and fund rules. Access and withdrawal options are restricted and can affect tax and future retirement income.", example: "Confirm transfer eligibility and consequences with the fund administrator before acting." },
+      { term: "Living annuity", category: "Investing", definition: "A South African retirement-income product where the investor chooses an investment strategy and a permitted drawdown, so income and capital can rise or fall and may be depleted. Rules and permitted drawdown ranges can change.", example: "Model longevity, inflation, fees, and a poor early sequence of returns." },
+      { term: "Guaranteed annuity", category: "Investing", definition: "An insurance contract that exchanges retirement capital for income under specified terms, often for life or a set period. The payment depends on the contract and insurer; inflation increases, survivor benefits, and guarantees may affect the starting income.", example: "Compare the full terms and insurer strength before giving up access to capital." },
+      { term: "Fixed deposit / call account", category: "Assets", definition: "Bank deposit products: a fixed deposit usually pays an agreed rate for a term with access restrictions or penalties, while a call account generally offers more flexible access and a variable rate. Terms and deposit protections vary.", example: "Compare the effective rate, access conditions, fees, tax, and deposit protection." },
+      { term: "Dividends withholding tax (DWT)", category: "Tax & planning", definition: "Tax withheld from certain dividend payments before they reach an investor. Rates, exemptions, treaties, reporting, and responsibility vary by jurisdiction and investor type; South African rules can change.", example: "Check the dividend statement and current SARS guidance for your circumstances." },
+      { term: "Preference shares", category: "Investing", definition: "Shares with specified rights that may prioritise dividends or capital distributions over ordinary shares. They are still investments, not necessarily guaranteed income; payment terms, voting rights, ranking, and issuer credit risk matter.", example: "Read the prospectus for cumulative terms, redemption rights, and payment conditions." },
+      { term: "Annuity flow", category: "Investing", definition: "A non-standard phrase for a series of payments made at regular intervals, potentially from an insurance contract, retirement product, or investment. The source, duration, inflation adjustment, guarantees, and tax treatment determine how reliable the income is.", example: "Distinguish a contractual payment from an investment distribution that can change." },
+      { term: "Offshore corporate shell / entity", category: "Tax & planning", definition: "A company incorporated outside its owners’ home country; “shell” often describes an entity with little independent activity. Cross-border ownership can create reporting, beneficial-ownership, substance, exchange-control, and tax obligations—it is not automatically tax-free or private.", example: "Get qualified cross-border legal and tax advice and disclose ownership as required." },
+      { term: "Section 12B / tax-incentivized infrastructure projects", category: "Tax & planning", regionalTerms: {
+        ZA: { label: "Section 12B / 12BA allowance", note: "South African tax provision · check current law", definition: "South African tax provisions may allow qualifying taxpayers deductions for specified eligible renewable-energy assets, subject to the Income Tax Act and current requirements. This is not a general tax shelter or a guaranteed project return." },
+        US: { label: "Section 179 deduction / Investment Tax Credit", note: "US provisions · not direct equivalents", definition: "US Section 179 expensing and clean-energy investment tax credits are distinct provisions with their own eligibility and limits. They are not direct equivalents to South African Section 12B/12BA; check current IRS rules." },
+        GB: { label: "Capital allowances / Annual Investment Allowance", note: "UK provisions · not direct equivalents", definition: "UK capital allowances, including the Annual Investment Allowance where applicable, follow UK tax law and eligibility rules. They are not direct equivalents to South African Section 12B/12BA; check current HMRC guidance." }
+      }, category: "Tax & planning", definition: "A South African tax allowance that may permit qualifying taxpayers to deduct specified costs of eligible renewable-energy assets, subject to the Income Tax Act and current requirements. It is not a general tax shelter or a guaranteed return from an infrastructure project.", example: "Confirm the current law, qualifying asset, claimant, and timing with SARS or a tax professional." },
+      { term: "Endowment policy", category: "Investing", definition: "A life-insurance investment policy that may pay a benefit after a term or on an insured event. Fees, access restrictions, underlying investments, tax treatment, and surrender penalties depend on the policy and local rules.", example: "Compare the surrender value and total charges with other suitable options." },
+      { term: "Liquidity crunch", category: "Planning & risk", definition: "A shortage of readily available cash to meet obligations, even if a person or business owns valuable assets. It can force borrowing or selling assets at an unfavourable time.", example: "Map upcoming bills against accessible cash, not just total net worth." },
+      { term: "Cash equivalents", category: "Assets", definition: "Short-term, highly liquid holdings that can generally be converted to a known amount of cash with low risk of value changes. The precise accounting definition is narrower than everyday use, and no deposit or fund is risk-free in every circumstance.", example: "Check access, issuer risk, fees, and any deposit-protection limits." },
+      { term: "Discretionary spending", category: "Spending", definition: "Spending on choices that can generally be reduced or postponed, unlike essential commitments such as basic housing or food. The distinction depends on a household’s needs and circumstances.", example: "Review flexible spending without treating every quality-of-life expense as waste." },
+      { term: "Deferred compensation", category: "Income", definition: "Pay earned or awarded now but received later, such as a deferred bonus or certain employment benefits. Vesting, forfeiture, employer risk, timing, and tax treatment depend on the plan and local law.", example: "Do not count unvested or conditional amounts as cash available today." },
+      { term: "Bond / fixed-income security", category: "Investing", definition: "A debt instrument in which an issuer borrows from investors and may promise interest and repayment under stated terms. Prices can fall when rates or credit risk rise, and repayment is not guaranteed if the issuer defaults.", example: "Check maturity, yield assumptions, inflation risk, and issuer credit quality." },
+      { term: "Money market fund", category: "Investing", definition: "A pooled fund investing in short-term money-market instruments. It aims for relatively stable liquidity but is not the same as a bank deposit and can carry credit, liquidity, rate, and capital risks.", example: "Check the fund mandate, fees, access, and whether capital is guaranteed." },
+      { term: "Beta (market risk coefficient)", category: "Investing", definition: "A measure of how an investment’s historical returns moved relative to a chosen market benchmark. It is sensitive to the period and benchmark used and does not capture every risk or predict future returns.", example: "A beta near one historically moved roughly with that benchmark, not with certainty." },
+      { term: "Asset allocation split", category: "Investing", definition: "The proportions of a portfolio invested across asset classes such as shares, bonds, property, and cash. The mix shapes risk, liquidity, and expected variability but cannot guarantee a particular outcome.", example: "Choose a mix that fits your time horizon and ability to withstand losses." },
+      { term: "Cost averaging (DCA)", category: "Investing", definition: "Investing a set amount on a regular schedule, buying more units when prices are lower and fewer when they are higher. It can support discipline but does not guarantee a profit or outperform investing a lump sum.", example: "Automate a sustainable contribution and avoid changing the plan on market headlines." },
+      { term: "Dividend reinvestment plan (DRIP)", category: "Investing", definition: "A plan that uses cash dividends to purchase additional shares or fund units, sometimes automatically. Reinvestment can compound exposure but does not remove tax, fees, concentration, or market risk.", example: "Check whether fractional units, fees, and tax reporting apply." },
+      { term: "Liquid assets", category: "Assets", definition: "Assets that can usually be accessed or sold quickly without a large loss in value, such as cash or some widely traded securities. Liquidity can disappear or become costly during stress.", example: "Keep near-term obligations in assets you can access on time." },
+      { term: "Rebalancing trigger", category: "Planning & risk", definition: "A pre-set date or allocation threshold that prompts a portfolio review and possible trades to restore the chosen asset mix. Rebalancing can create costs and tax and does not guarantee better returns.", example: "Write down the review rule before markets become emotional." },
+      { term: "Capital depreciation", category: "Assets", definition: "A decline in an asset’s value over time or after purchase. In accounting, depreciation can also mean allocating a tangible asset’s cost over its useful life; that accounting expense is not necessarily the market-price change.", example: "A vehicle may depreciate in resale value even while its accounting treatment differs." },
+      { term: "Systematic risk", category: "Planning & risk", definition: "Risk affecting a broad market or many investments at once, such as a recession, major rate change, or geopolitical shock. It cannot be eliminated simply by holding more securities in the same market.", example: "Diversification helps with some risks, but a broad market fall can still hurt." },
+      { term: "Outsourced property fractionalization", category: "Investing", definition: "A platform or third party arranges shared or fractional exposure to property, sometimes through a company, trust, or security. Your legal rights may be a claim on an entity rather than direct title; fees, governance, valuation, liquidity, and platform failure matter.", example: "Read the legal structure and exit rules; advertised rental yield is not guaranteed." },
+      { term: "Alpha", category: "Investing", definition: "A measure of an investment’s return relative to a benchmark or model after accounting for specified risk factors. A positive historical alpha is not proof of skill or a forecast; measurement choices and fees matter.", example: "Compare like periods and benchmarks, net of fees, and expect uncertainty." },
+      { term: "Expense compression approach", category: "Planning & risk", definition: "A plain-language description—not a standard product or regulated strategy—for deliberately reducing recurring costs such as unnecessary subscriptions, interest, and investment fees. Savings help only when the change is sustainable and the replacement remains suitable.", example: "Review recurring costs annually and redirect durable savings toward a goal." },
+      { term: "Volatility protection deployment", category: "Planning & risk", definition: "A non-standard phrase for using risk controls such as diversification, a suitable cash reserve, and an affordable asset mix to prepare for market swings. No technique can reliably prevent losses or perfectly time markets.", example: "Choose a plan you can maintain through a downturn rather than chasing a perfect hedge." },
+      { term: "Exchange-rate risk", category: "Planning & risk", definition: "The possibility that currency movements change the home-currency value of foreign investments, income, or debts. “Forex adjustment factor” is not a universal standard measure; the effect depends on exposure, hedging, and when values are converted.", example: "A foreign asset can rise in its own currency yet fall in your currency." },
+      { term: "Capital preservation indexing", category: "Planning & risk", definition: "A non-standard phrase for tracking whether capital retains purchasing power against an inflation index. It is a measurement idea, not a guaranteed investment method; taxes, fees, asset values, and the chosen index affect results.", example: "Compare after-cost value with inflation, while recognising past inflation is not a forecast." },
+      { term: "Inflation drag expansion", category: "Planning & risk", definition: "A non-standard phrase for how inflation reduces purchasing power when prices rise faster than the return on cash or investments, with that gap accumulating over time. It is not a formal metric or forecast.", example: "A 3% cash return with 5% inflation loses purchasing power before tax and fees." }
     ];
 
     const termGrid = document.getElementById("termGrid");
@@ -365,41 +449,121 @@
     const countLabel = document.getElementById("glossaryCount");
     const emptyState = document.getElementById("emptyState");
     let activeFilter = "all";
+    const originalDocumentTitle = document.title;
+    const requestedRegion = new URLSearchParams(window.location.search).get("region");
+    const glossaryRegion = ["ZA", "US", "GB", "CA"].includes(requestedRegion) ? requestedRegion : "";
+    const supportedGuideLanguages = ["en", "es", "fr", "de", "zh", "hi", "ar", "pt", "ru", "ja"];
+    const languageSelector = document.getElementById("guideLanguage");
+    const requestedLanguage = new URLSearchParams(window.location.search).get("lang");
+    let activeGuideLanguage = supportedGuideLanguages.includes(requestedLanguage) ? requestedLanguage : "en";
+    languageSelector.value = activeGuideLanguage;
+    const originalTextNodes = new WeakMap();
+    const originalAttributes = new WeakMap();
+    const canonicalRegionalLabels = new Set([
+      "Tax-free investment (TFI)",
+      "Roth IRA",
+      "ISA (Individual Savings Account)",
+      "TFSA (Tax-Free Savings Account)",
+      "Rollover 401(k) / Traditional IRA transfer",
+      "SIPP transfer",
+      "RRSP transfer",
+      "Section 12B / 12BA allowance",
+      "Section 179 deduction / Investment Tax Credit",
+      "Capital allowances / Annual Investment Allowance"
+    ]);
+
+    function translateGuideText(text) {
+      if (activeGuideLanguage === "en" || canonicalRegionalLabels.has(text)) return text;
+      return window.finance101Translations?.[activeGuideLanguage]?.[text] || text;
+    }
+
+    function updateGuideLanguage() {
+      activeGuideLanguage = languageSelector.value;
+      const translations = window.finance101Translations?.[activeGuideLanguage];
+      if (!translations && activeGuideLanguage !== "en") {
+        throw new Error(`Finance 101 translations are unavailable for "${activeGuideLanguage}".`);
+      }
+      document.documentElement.lang = activeGuideLanguage === "zh" ? "zh-CN" : activeGuideLanguage;
+      document.documentElement.dir = activeGuideLanguage === "ar" ? "rtl" : "ltr";
+      document.title = translateGuideText(originalDocumentTitle);
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      let node;
+      while ((node = walker.nextNode())) {
+        if (node.parentElement.closest("script, style")) continue;
+        if (node.parentElement.closest("#guideLanguage")) continue;
+        if (!originalTextNodes.has(node)) originalTextNodes.set(node, node.textContent);
+        const original = originalTextNodes.get(node);
+        const trimmed = original.trim();
+        if (!trimmed) continue;
+        const start = original.indexOf(trimmed);
+        const end = start + trimmed.length;
+        node.textContent = `${original.slice(0, start)}${translateGuideText(trimmed)}${original.slice(end)}`;
+      }
+      document.querySelectorAll("[placeholder], [aria-label], [title]").forEach(element => {
+        if (!originalAttributes.has(element)) originalAttributes.set(element, new Map());
+        const originals = originalAttributes.get(element);
+        for (const attribute of ["placeholder", "aria-label", "title"]) {
+          if (!element.hasAttribute(attribute)) continue;
+          if (!originals.has(attribute)) originals.set(attribute, element.getAttribute(attribute));
+          element.setAttribute(attribute, translateGuideText(originals.get(attribute)));
+        }
+      });
+      renderTerms();
+    }
 
     function renderTerms() {
       const query = searchInput.value.trim().toLocaleLowerCase();
       const visible = concepts.filter(item => {
         const matchesFilter = activeFilter === "all" || item.category === activeFilter;
-        const matchesQuery = `${item.term} ${item.definition} ${item.example} ${item.category}`.toLocaleLowerCase().includes(query);
+        const regionalTerm = item.regionalTerms && (item.regionalTerms[glossaryRegion] || (glossaryRegion ? item.regionalTerms.ZA : null));
+        const matchesQuery = `${item.term} ${item.searchTerms || ""} ${item.definition} ${item.example} ${item.category} ${regionalTerm ? `${regionalTerm.label} ${regionalTerm.note} ${regionalTerm.definition}` : ""} ${translateGuideText(item.term)} ${translateGuideText(item.definition)} ${translateGuideText(item.example)} ${translateGuideText(item.category)} ${regionalTerm ? `${translateGuideText(regionalTerm.label)} ${translateGuideText(regionalTerm.note)} ${translateGuideText(regionalTerm.definition)}` : ""}`.toLocaleLowerCase().includes(query);
         return matchesFilter && matchesQuery;
       }).sort((a, b) => a.term.localeCompare(b.term));
       termGrid.replaceChildren(...visible.map(item => {
+        const regionalTerm = item.regionalTerms && (item.regionalTerms[glossaryRegion] || (glossaryRegion ? item.regionalTerms.ZA : null));
         const card = document.createElement("article");
         card.className = "term-card";
         const category = document.createElement("span");
         category.className = "term-category";
-        category.textContent = item.category;
+        category.textContent = translateGuideText(item.category);
         const title = document.createElement("h3");
-        title.textContent = item.term;
+        title.textContent = translateGuideText(regionalTerm ? regionalTerm.label : item.term);
+        if (regionalTerm) title.title = translateGuideText(regionalTerm.note);
         const definition = document.createElement("p");
-        definition.textContent = item.definition;
+        definition.textContent = translateGuideText(regionalTerm ? regionalTerm.definition : item.definition);
         const example = document.createElement("span");
         example.className = "term-example";
-        example.textContent = item.example;
-        card.append(category, title, definition, example);
+        example.textContent = translateGuideText(item.example);
+        card.append(category, title);
+        if (regionalTerm) {
+          const regionNote = document.createElement("span");
+          regionNote.className = "term-region-note";
+          regionNote.textContent = translateGuideText(regionalTerm.note);
+          card.append(regionNote);
+        }
+        card.append(definition, example);
         return card;
       }));
-      countLabel.textContent = `Showing ${visible.length} of ${concepts.length} concepts`;
+      countLabel.textContent = translateGuideText("Showing {visible} of {total} concepts")
+        .replace("{visible}", String(visible.length))
+        .replace("{total}", String(concepts.length));
       emptyState.style.display = visible.length ? "none" : "block";
     }
 
     document.getElementById("termTotal").textContent = `${concepts.length}`;
+    languageSelector.addEventListener("change", () => {
+      const pageUrl = new URL(window.location.href);
+      if (languageSelector.value === "en") pageUrl.searchParams.delete("lang");
+      else pageUrl.searchParams.set("lang", languageSelector.value);
+      window.history.replaceState(null, "", pageUrl);
+      updateGuideLanguage();
+    });
     searchInput.addEventListener("input", renderTerms);
     document.querySelectorAll(".filter-chip").forEach(button => {
       button.addEventListener("click", () => {
         activeFilter = button.dataset.filter;
         document.querySelectorAll(".filter-chip").forEach(chip => chip.setAttribute("aria-pressed", String(chip === button)));
-        renderTerms();
+        updateGuideLanguage();
       });
     });
 
@@ -414,9 +578,9 @@
         return input.value !== "" && Number.isFinite(value) && value >= min && value <= max;
       });
       if (!valid) {
-        document.getElementById("unleveredResult").textContent = "Check inputs";
-        document.getElementById("leveragedResult").textContent = "Check inputs";
-        document.getElementById("equityReturnResult").textContent = "Check inputs";
+        document.getElementById("unleveredResult").textContent = translateGuideText("Check inputs");
+        document.getElementById("leveragedResult").textContent = translateGuideText("Check inputs");
+        document.getElementById("equityReturnResult").textContent = translateGuideText("Check inputs");
         return;
       }
       const unleveredGain = own * returnPercent / 100;
@@ -424,13 +588,13 @@
       const equityReturn = own > 0 ? leveragedGain / own * 100 : null;
       document.getElementById("unleveredResult").textContent = numberFormat.format(unleveredGain);
       document.getElementById("leveragedResult").textContent = numberFormat.format(leveragedGain);
-      document.getElementById("equityReturnResult").textContent = equityReturn === null ? "N/A" : `${equityReturn.toFixed(1)}%`;
-      document.getElementById("simulationExplanation").textContent = leveragedGain < 0
+      document.getElementById("equityReturnResult").textContent = equityReturn === null ? translateGuideText("N/A") : `${equityReturn.toFixed(1)}%`;
+      document.getElementById("simulationExplanation").textContent = translateGuideText(leveragedGain < 0
         ? "In this scenario the leveraged position loses money after interest. The debt still has to be repaid, and a real loss can force a sale."
-        : "This scenario shows a positive result, not a guaranteed or risk-free arbitrage. Returns are uncertain; debt obligations are contractual.";
+        : "This scenario shows a positive result, not a guaranteed or risk-free arbitrage. Returns are uncertain; debt obligations are contractual.");
     }
     simulationInputs.forEach(input => input.addEventListener("input", updateSimulation));
-    renderTerms();
+    updateGuideLanguage();
     updateSimulation();
   </script>
 </body>

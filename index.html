@@ -8,6 +8,7 @@
   <link rel="icon" type="image/svg+xml" href="./icon.svg">
   <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
   <link rel="manifest" href="./site.webmanifest">
+  <link rel="stylesheet" href="./music-player.css">
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f8f9fa; color: #212529; margin: 0; padding: 20px; }
     .container { max-width: 800px; margin: 0 auto; padding: 20px; }
@@ -656,6 +657,20 @@
     <p id="recordsDialogStatus" class="records-status" role="status" aria-live="polite"></p>
   </dialog>
 
+  <details class="background-music-player">
+    <summary>♫ Background music</summary>
+    <label for="backgroundMusicTrack">Choose a song</label>
+    <select id="backgroundMusicTrack" aria-label="Choose a song"></select>
+    <div class="background-music-controls">
+      <button id="backgroundMusicToggle" type="button" aria-pressed="false">Play</button>
+      <label data-volume-label for="backgroundMusicVolume">Volume</label>
+      <input id="backgroundMusicVolume" type="range" min="0" max="1" step="0.01" value="0.35" aria-label="Volume">
+    </div>
+    <audio id="backgroundMusic" preload="none"></audio>
+    <p class="background-music-status" role="status" aria-live="polite">Playback starts when you press play.</p>
+  </details>
+
   <script src="app_v2.js?v=20261101-international-overrides"></script>
+  <script src="./music-player.js?v=20261101-player"></script>
 </body>
 </html>
